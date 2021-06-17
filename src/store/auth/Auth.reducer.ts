@@ -2,7 +2,8 @@ import { IAuthState } from "./interfaces/IAuthState";
 import AppStorage from "../../utils/AppStorage"
 import { add } from "date-fns";
 import { ACCESS_TOKEN_KEY, EXPIRES_AT_KEY, ISSUED_DATETIME_KEY, REFRESH_TOKEN_KEY } from "./Auth.constants";
-import { AuthActionKeys, AuthActionUnion } from "./Auth.actions";
+import { AuthActionKeys } from "./Auth.actions";
+import { Reducer } from "redux";
 
 const token = AppStorage.GetItem(ACCESS_TOKEN_KEY);
 const refreshToken = AppStorage.GetItem(REFRESH_TOKEN_KEY);
@@ -21,13 +22,10 @@ const initialState: IAuthState = {
     hasExpired: isTokenExpired(),
 };
 
-const authReducer = (state = initialState, action: AuthActionUnion): IAuthState => {
+const authReducer: Reducer<IAuthState> = (state = initialState, action) => {
     switch (action.type) {
         case AuthActionKeys.AUTH_LOGIN_REQUEST:
-            return {
-                ...state,
-                isLoading: true,
-            };
+            return { ...state, isLoading: true };
         case AuthActionKeys.AUTH_LOGIN_SUCCESS:
             return {
                 ...state,
@@ -46,6 +44,8 @@ const authReducer = (state = initialState, action: AuthActionUnion): IAuthState 
                 error: action.payload,
                 message: undefined,
             };
+        default:
+            return state;
     }
 }
 
