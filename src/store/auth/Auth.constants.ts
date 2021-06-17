@@ -1,0 +1,9 @@
+export const REFRESH_TOKEN_KEY = 'refresh_token';
+export const ACCESS_TOKEN_KEY = 'access_token';
+export const EXPIRES_AT_KEY = 'expires_at';
+export const ISSUED_DATETIME_KEY = 'issued_datetime';
+export const NOME_KEY = 'nome';
+export const EMAIL_KEY = 'email';
+export const USER_IMAGE_KEY = 'user_image';
+export const CURRENT_TENANT_KEY = 'current_tenant';
+export const USER_ID_KEY = 'user_id';
