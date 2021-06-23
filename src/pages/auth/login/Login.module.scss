@@ -1,0 +1,70 @@
+.containerWrapper {
+    width: 700px;
+    height: 430px;
+    margin-top: 45vh;
+    margin-left: 50%;
+    position: relative;
+    border-radius: 0.5rem;
+    background: #1890ff;
+    display: flex;
+    left: -350px;
+    top: -215px;
+
+    
+    .imgWrapper {
+        width: 50%;
+        background-size: cover;
+        opacity: 0.7;
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+        border: none;
+    }
+
+    .loginWrapper {
+        align-items: center;
+        width: 50%;
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        background-color: #fff;
+
+        img {
+            position: relative;
+            left: 76px;
+            top: 40px;
+            height: 55px;
+        }
+
+        .contentWrapper {
+            position: relative;
+            top: 80px;
+            left: 47px;
+            [class$="inputLogin"] {
+                padding-bottom: 20px;
+                input {
+                    width: 250px;
+                    height: 35px;
+
+                    &.focus-visible {
+                        border: red !important;
+                    }
+                }
+            }
+
+            button {
+                font-family: "Poppins", sans-serif;
+                width: 250px;
+                height: 35px;
+                margin-top: 10px;
+            }
+
+            .labelForgotPassword {
+                cursor: pointer;
+                color: #9ca8b3 !important;
+                position: relative;
+                left: 87px;
+                top: 26px;
+                font-size: 12px;
+            }
+        }
+    }
+}

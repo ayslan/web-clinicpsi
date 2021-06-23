@@ -1,0 +1,27 @@
+button.ant-btn {
+  border: 2px solid #22CCE2;
+  border-radius: 2px;
+  cursor: pointer;
+
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  
+  color: #22CCE2;
+}
+
+button.ant-btn.ant-btn-primary {
+  background: #22CCE2;
+  color: #FFFFFF;
+}
+
+button.ant-btn.ant-btn-primary:hover {
+  background: #00A7BD;
+  border: 2px solid #00A7BD;
+  color: #FFFFFF;
+}
+
+button.ant-btn-circle {
+  border-radius: 50%;
+}

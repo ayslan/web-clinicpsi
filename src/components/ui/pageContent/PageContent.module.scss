@@ -1,0 +1,17 @@
+.container {
+    margin-left: 20px;
+
+    .title {
+        padding: 12px 0px !important;
+        span {
+            font-size: 26px;
+            color: #44566c;
+        }
+    }
+
+    .children {
+        background-color: #fff;
+        padding: 15px;
+        min-height: calc(100vh - 147px);
+    }
+}

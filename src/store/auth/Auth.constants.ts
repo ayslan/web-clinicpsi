@@ -7,3 +7,4 @@ export const EMAIL_KEY = 'email';
 export const USER_IMAGE_KEY = 'user_image';
 export const CURRENT_TENANT_KEY = 'current_tenant';
 export const USER_ID_KEY = 'user_id';
+export const COOKIENAME_DEVICEID = 'deviceId';

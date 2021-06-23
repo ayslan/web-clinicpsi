@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { history } from '../';
 import { AuthApi } from '../../data/Auth.api';
 import { AuthUtils } from '../../utils/AuthUtils';
-import { userLogin, userLoginFailure, userLoginSuccess } from './Auth.actions';
+import { userLogin, defaultFailure, userLoginSuccess } from './Auth.actions';
 
 export function* signIn({ payload }: ReturnType<typeof userLogin>) {
   try {
@@ -14,10 +14,9 @@ export function* signIn({ payload }: ReturnType<typeof userLogin>) {
 
     const error = e.errors && e.errors.length ? e.errors[0].Message : 'Email ou senha incorretos';
     //   toastHandler.showError(error); #revisar
-    yield put(userLoginFailure(error));
+    yield put(defaultFailure(error));
   }
 }
-
 
 export function* loginSuccess({ payload }: ReturnType<typeof userLoginSuccess>) {
   AuthUtils.setLoggedUser({

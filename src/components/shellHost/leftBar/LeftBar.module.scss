@@ -1,0 +1,46 @@
+.containerBar {
+    height: calc(100vh - 64px);
+    float: left;
+    position: relative;
+    width: 256px;
+    padding-top: 10px;
+    background: #001529;
+
+    .header {
+        padding: 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 1px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background-color: #fff;
+        text-align: center;
+
+        img {
+            width: 150px;
+        }
+    }
+
+    .content {
+        background-color: #1b2a40;
+    }
+}
+
+.containerBarCollapsed {
+    width: 80px !important;
+}
+
+.parentMenuCollapsed,
+.parentMenuCollapsed.ant-menu-item-selected {
+    border: 0 !important;
+    margin: 0 !important;
+    background: #001529 !important;
+    color: #fff !important;
+    cursor: default;
+
+    &:hover {
+        color: #fff;
+    }
+}

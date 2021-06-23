@@ -35,7 +35,7 @@ const authReducer: Reducer<IAuthState> = (state = initialState, action) => {
                 message: undefined,
                 error: undefined,
             };
-        case AuthActionKeys.AUTH_LOGIN_FAILED:
+        case AuthActionKeys.DEFAULT_FAILED:
             return {
                 ...state,
                 isLoading: false,

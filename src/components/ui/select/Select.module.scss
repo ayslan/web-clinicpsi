@@ -1,0 +1,43 @@
+.contentInput {
+    font-family: "Poppins", sans-serif;
+    color: #354558;
+    margin-bottom: 17px;
+
+    .description {
+        display: table;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .labelInput {
+        position: relative;
+        top: 5px;
+
+        .select {
+            font-family: inherit;
+            width: 100%;
+            &:focus {
+                outline-color: #30419b;
+            }
+
+            [class*="ant-select-selector"] {
+                padding-top: 2px;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                font-size: 13px;
+                font-weight: normal;
+                font-family: "Poppins", sans-serif;
+                color: #354558;
+                min-height: 35px;
+            }
+        }
+    }
+
+    .errorInput {
+        font-size: 11px;
+        color: #fc5454;
+        margin-top: 3px;
+        margin-left: 1px;
+        font-weight: 100;
+    }
+}

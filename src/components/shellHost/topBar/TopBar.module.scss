@@ -1,0 +1,51 @@
+.container {
+    height: 64px;
+    background-color: #fff;
+    box-shadow: 1px 0 5px #00000033;
+    display: flex;
+
+    .contentLogo {
+        width: 270px;
+        text-align: center;
+        padding-top: 10px;
+
+        img {
+            width: 160px;
+        }
+    }
+
+    .nomeUsuario {
+        position: relative;
+        left: 100vw;
+        margin-left: -620px;
+        top: 20px;
+        width: 300px;
+        text-align: right;
+
+        label {
+            position: relative;
+            top: -10px;
+            margin-right: 20px;
+        }
+
+        img {
+            width: 50px;
+            border-radius: 50px;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            top: -13px;
+            background-image: url("../../../static/images/avatar-icon-50.jpg");
+        }
+    }
+
+    .contentCollapse {
+        svg {
+            cursor: pointer;
+            font-size: 20px;
+            color: #5b7798;
+            top: 21px;
+            position: relative;
+        }
+    }
+}
