@@ -5,8 +5,7 @@ import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import logo from '../../../static/images/logo.svg'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { IGlobalReducerState } from '../../../store/base/interface/IGlobalReducerState';
-import { AuthActions } from '../../../store/auth/Auth.actions';
-import { FaUserCircle } from 'react-icons/fa';
+// import { AuthActions } from '../../../store/auth/Auth.actions';
 import { Skeleton } from 'antd';
 import { AuthUtils } from '../../../utils/AuthUtils';
 
@@ -18,17 +17,17 @@ const TopBar: FC<Props> = (props) => {
     const dispatch = useDispatch();
     var isCollapsed = localStorage.getItem('menuCollapsed') == "true";
 
-    useEffect(() => {
-        if (!props.user) {
-            dispatch(AuthActions.getUserInfo());
-        }
-    }, [props.user]);
+    // useEffect(() => {
+    //     if (!props.user) {
+    //         dispatch(AuthActions.getUserInfo());
+    //     }
+    // }, [props.user]);
 
-    var avatarImageUrl;
-    var avatarFileName = props.user?.avatarFileName;
+    // var avatarImageUrl;
+    // var avatarFileName = props.user?.avatarFileName;
 
-    if (avatarFileName && avatarFileName.length > 0)
-        avatarImageUrl = `${process.env.REACT_APP_BASE_URL_STORAGE}${avatarFileName}`;
+    // if (avatarFileName && avatarFileName.length > 0)
+    //     avatarImageUrl = `${process.env.REACT_APP_BASE_URL_STORAGE}${avatarFileName}`;
 
     return (
         <div className={styles['container']}>
@@ -39,7 +38,7 @@ const TopBar: FC<Props> = (props) => {
                 {isCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             </div>
             <div className={styles['nomeUsuario']}>
-                {!props.user ?
+                {/* {!props.user ?
                     <>
                         <Skeleton.Input style={{ width: 200 }} active={true} size={'small'} />
                     </> :
@@ -47,7 +46,7 @@ const TopBar: FC<Props> = (props) => {
                         <label>Olá, {props.user?.name}</label>
                         <img src={avatarImageUrl} />
                     </>
-                }
+                } */}
             </div>
         </div>
     )

@@ -17,7 +17,7 @@ import {
     LogoutOutlined,
     LaptopOutlined,
 } from '@ant-design/icons';
-import { AuthUtils, ILoggedUser, setVisibleAccessAdmin } from '../../../utils/AuthUtils';
+import { AuthUtils, ILoggedUser } from '../../../utils/AuthUtils';
 
 export interface ILeftBar {
     isCollapsed: boolean;
@@ -79,7 +79,7 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                     <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Pedidos</Menu.Item>
                     <Menu.Item key='/pedidos/importador'>Importador <Link to='/pedidos/importador' /></Menu.Item>
                 </SubMenu>
-                <SubMenu key='/pedidoItens' icon={<AppstoreOutlined />} title='Itens do Pedido'>
+                {/* <SubMenu key='/pedidoItens' icon={<AppstoreOutlined />} title='Itens do Pedido'>
                     <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Itens do Pedido</Menu.Item>
                     <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/pedidoItens/atualizar'>Atualizar <Link to='/pedidoItens/atualizar' /></Menu.Item>
                     <Menu.Item key='/pedidoItens/atualizarItens'>Lista de Itens Atualizados <Link to='/pedidoItens/atualizarItens' /></Menu.Item>
@@ -115,7 +115,7 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/config' icon={<SettingOutlined />}>
                     Configurações
                     <Link to='/config' />
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item key='/logout' icon={<LogoutOutlined />} onClick={onLogout}>
                     Sair
                 </Menu.Item>
