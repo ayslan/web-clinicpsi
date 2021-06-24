@@ -5,7 +5,7 @@ import Form from '../../../components/ui/form';
 import { useDispatch, connect, ConnectedProps } from 'react-redux';
 import Field from '../../../components/ui/field';
 import schema from './Login.schema';
-import logo from '../../../static/images/logo.svg'
+import logo from '../../../static/images/logo.png'
 import carImg from '../../../static/images/car-login.jpg'
 import { Button } from 'antd';
 import { IGlobalReducerState } from '../../../store/base/interface/IGlobalReducerState';

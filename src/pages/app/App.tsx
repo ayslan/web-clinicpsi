@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route } from 'react-router';
 import Login from '../auth/login';
+import Dashboard from '../dashboard';
 
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
@@ -15,7 +16,7 @@ interface IApp {
   isAuthenticated: boolean;
 }
 
-const App: FC<IApp> = ({ isAuthenticated }) => {
+const App: FC = () => {
 
   if (process.env.REACT_APP_AMBIENTE == 'PRODUCTION' && window.location.origin.indexOf('integracao.rbrltda.com.br') == -1) {
     window.location.href = 'https://integracao.rbrltda.com.br';
@@ -44,16 +45,16 @@ const App: FC<IApp> = ({ isAuthenticated }) => {
         draggable
         pauseOnHover
       />
-      {isAuthenticated ?
+      {true ?
         <ShellHost>
           <Switch>
-            {/* <Route path='/' component={Users} /> */}
+            <Route path='/' component={Dashboard} />
           </Switch>
         </ShellHost>
         :
         <Switch>
           {/* <Route path='/login' component={Login} /> */}
-          <Route path='/' component={Login} />
+          {/* <Route path='/' component={Login} /> */}
         </Switch>
       }
     </>

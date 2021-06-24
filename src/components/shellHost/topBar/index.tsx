@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import styles from './TopBar.module.scss';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 
-import logo from '../../../static/images/logo.svg'
+import logo from '../../../static/images/logo.png'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { IGlobalReducerState } from '../../../store/base/interface/IGlobalReducerState';
 // import { AuthActions } from '../../../store/auth/Auth.actions';

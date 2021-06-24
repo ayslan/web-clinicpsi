@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import styles from './Form.module.scss';
 import { Form as FormReact } from 'react-final-form';
-import { ObjectSchema } from 'yup';
 import arrayMutators from 'final-form-arrays';
 import { Decorator, Mutator } from 'final-form';
+import { ObjectSchema } from 'yup';
 
 export interface IForm {
     onSubmit: (values?: any, erros?: string[]) => void;
