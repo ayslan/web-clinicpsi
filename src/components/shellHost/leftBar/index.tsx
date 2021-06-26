@@ -16,6 +16,10 @@ import {
     SmileOutlined,
     LogoutOutlined,
     LaptopOutlined,
+    DashboardOutlined,
+    CalendarOutlined,
+    DollarCircleOutlined,
+    FontSizeOutlined,
 } from '@ant-design/icons';
 import { AuthUtils, ILoggedUser } from '../../../utils/AuthUtils';
 
@@ -32,24 +36,24 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
 
     var pathName = window.location.pathname;
 
-    if (pathName.split('/').length == 2) {
-        defaultOpenKeys = [];
-        defaultSelectedKeys = [pathName];
-    }
-    else {
-        defaultOpenKeys = [pathName.substr(0, pathName.indexOf('/', 2))];
-        defaultSelectedKeys = [`/${pathName.split('/')[1]}/${pathName.split('/')[2]}`];
-    }
+    // if (pathName.split('/').length == 2) {
+    //     defaultOpenKeys = [];
+    //     defaultSelectedKeys = [pathName];
+    // }
+    // else {
+    //     defaultOpenKeys = [pathName.substr(0, pathName.indexOf('/', 2))];
+    //     defaultSelectedKeys = [`/${pathName.split('/')[1]}/${pathName.split('/')[2]}`];
+    // }
 
     const [openKeys, setOpenKeys] = useState(isCollapsed ? [] : defaultOpenKeys);
 
     const onOpenChange = (keys: any) => {
-        const latestOpenKey = keys.find((key: any) => openKeys.indexOf(key) === -1);
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
+        // const latestOpenKey = keys.find((key: any) => openKeys.indexOf(key) === -1);
+        // if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        //     setOpenKeys(keys);
+        // } else {
+        //     setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+        // }
     };
 
     const onChange = (e: any) => {
@@ -75,10 +79,37 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 onOpenChange={onOpenChange}
                 onClick={onChange}
             >
-                <SubMenu key='/pedidos' icon={<FormOutlined />} title='Pedidos'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Pedidos</Menu.Item>
-                    <Menu.Item key='/pedidos/importador'>Importador <Link to='/pedidos/importador' /></Menu.Item>
-                </SubMenu>
+                <Menu.Item key='/' icon={<DashboardOutlined className={styles['icon']} />} title='Dashboard'>
+                    Dashboard
+                    <Link to='/' />
+                </Menu.Item>
+                <Menu.Item key='/customers' icon={<SmileOutlined className={styles['icon']} />} title='Clientes'>
+                    Clientes
+                    <Link to='/customers' />
+                </Menu.Item>
+                <Menu.Item key='/calendar' icon={<CalendarOutlined className={styles['icon']} />} title='Agenda'>
+                    Agenda
+                    <Link to='/calendar' />
+                </Menu.Item>
+                <Menu.Item key='/finance' icon={<DollarCircleOutlined className={styles['icon']} />} title='Financeiro'>
+                    Financeiro
+                    <Link to='/finance'></Link>
+                </Menu.Item>
+                <Menu.Item key='/users' icon={<UserOutlined className={styles['icon']} />} >
+                    Usuários
+                    <Link to='/users' />
+                </Menu.Item>
+                <Menu.Item key='/settings' icon={<SettingOutlined className={styles['icon']} />}>
+                    Configurações
+                    <Link to='/settings' />
+                </Menu.Item>
+                <Menu.Item key='/logout' icon={<LogoutOutlined className={styles['icon']} />} onClick={onLogout}>
+                    Sair
+                </Menu.Item>
+                {/* <SubMenu key='/clientes' icon={<FormOutlined />} title='Clientes'>
+                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Clientes</Menu.Item>
+                    <Menu.Item key='/pedidos/importador'>Cadastrar <Link to='/pedidos/importador' /></Menu.Item>
+                </SubMenu> */}
                 {/* <SubMenu key='/pedidoItens' icon={<AppstoreOutlined />} title='Itens do Pedido'>
                     <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Itens do Pedido</Menu.Item>
                     <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/pedidoItens/atualizar'>Atualizar <Link to='/pedidoItens/atualizar' /></Menu.Item>
@@ -96,10 +127,6 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/projecaoVenda' icon={<RiseOutlined />}>
                     Projeção de Venda
                 </Menu.Item>
-                <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/usuarios' icon={<UserOutlined />} >
-                    Usuários
-                    <Link to='/usuarios' />
-                </Menu.Item>
                 <SubMenu key='/dashboards' icon={<PieChartOutlined />} title='Dashboards'>
                     <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Dashboards</Menu.Item>
                     <Menu.Item key='/dashboards/vendas'>Vendas <Link to='/dashboards/vendas' /></Menu.Item>
@@ -112,13 +139,8 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                     <Menu.Item key='/api/campos-api'>Campos API <Link to='/api/campos-api' /></Menu.Item>
                     <Menu.Item key='/api/campos-integracao'>Campos Integração <Link to='/api/campos-integracao' /></Menu.Item>
                 </SubMenu>
-                <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/config' icon={<SettingOutlined />}>
-                    Configurações
-                    <Link to='/config' />
-                </Menu.Item> */}
-                <Menu.Item key='/logout' icon={<LogoutOutlined />} onClick={onLogout}>
-                    Sair
-                </Menu.Item>
+                */}
+
             </Menu>
         </div >
     );
