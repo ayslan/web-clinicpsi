@@ -1,0 +1,36 @@
+body {
+    font-family: "Nunito", sans-serif !important;
+    background-color: #f9f9f9;
+    overflow: hidden;
+}
+
+main {
+    overflow-y: auto;
+    height: calc(100vh - 50px);
+}
+
+.Toastify__toast--success {
+    background: #40a943 !important;
+}
+
+.ant-modal-header {
+    background-color: #1b2a40 !important;
+}
+
+.ant-modal-header .ant-modal-title {
+    color: #fff !important;
+}
+
+.ant-modal-content .ant-modal-close {
+    color: rgb(255 255 255 / 45%);
+}
+
+.ant-modal-body {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.btn-green.ant-btn-primary {
+    background: #21a738 !important;
+    border-color: #21a738 !important;
+}

@@ -4,7 +4,7 @@
     position: relative;
     width: 256px;
     padding-top: 10px;
-    background: #001529;
+    background: #313a46 !important;
 
     .header {
         padding: 10px;
@@ -24,12 +24,23 @@
     }
 
     .content {
-        background-color: #1b2a40;
+        background-color: #313a46 !important;
+    }
+
+    li[class*="ant-menu-item-selected"] {
+        background-color: #43556d !important;
+    }
+
+    li[class*="ant-menu-item"] {
+        font-size: 0.9375rem;
+        font-weight: 400;
     }
 }
 
 .icon {
-    font-size: 18px !important;
+    font-size: 1.1rem !important;
+    margin-right: 10px;
+    margin-top: -1px;
 }
 
 .containerBarCollapsed {
@@ -40,7 +51,7 @@
 .parentMenuCollapsed.ant-menu-item-selected {
     border: 0 !important;
     margin: 0 !important;
-    background: #001529 !important;
+    background: #43556d !important;
     color: #fff !important;
     cursor: default;
 

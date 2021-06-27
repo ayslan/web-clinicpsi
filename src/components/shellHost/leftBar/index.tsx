@@ -74,7 +74,7 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 mode='inline'
                 theme='dark'
                 inlineCollapsed={isCollapsed}
-                style={{ height: '100%' }}
+                style={{ height: '100%', backgroundColor: '#313a46' }}
                 openKeys={openKeys}
                 onOpenChange={onOpenChange}
                 onClick={onChange}
