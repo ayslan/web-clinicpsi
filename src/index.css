@@ -1,6 +1,6 @@
 body {
     font-family: "Nunito", sans-serif !important;
-    background-color: #f9f9f9;
+    background-color: #f9fafd;
     overflow: hidden;
 }
 
@@ -33,4 +33,9 @@ main {
 .btn-green.ant-btn-primary {
     background: #21a738 !important;
     border-color: #21a738 !important;
+}
+
+.ant-breadcrumb{
+    float: right;
+    margin-top: 15px;
 }

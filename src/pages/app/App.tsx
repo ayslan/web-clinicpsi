@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route } from 'react-router';
 import Login from '../auth/login';
 import Dashboard from '../dashboard';
+import Customers from '../customers';
 
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
@@ -48,7 +49,8 @@ const App: FC = () => {
       {true ?
         <ShellHost>
           <Switch>
-            <Route path='/' component={Dashboard} />
+            <Route path='/' exact component={Dashboard} />
+            <Route path='/customers' exact component={Customers} />
           </Switch>
         </ShellHost>
         :
