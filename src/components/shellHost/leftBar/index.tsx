@@ -83,9 +83,9 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                     Dashboard
                     <Link to='/' />
                 </Menu.Item>
-                <Menu.Item key='/customers' icon={<SmileOutlined className={styles['icon']} />} title='Clientes'>
+                <Menu.Item key='/clients' icon={<SmileOutlined className={styles['icon']} />} title='Clientes'>
                     Clientes
-                    <Link to='/customers' />
+                    <Link to='/clients' />
                 </Menu.Item>
                 <Menu.Item key='/calendar' icon={<CalendarOutlined className={styles['icon']} />} title='Agenda'>
                     Agenda
