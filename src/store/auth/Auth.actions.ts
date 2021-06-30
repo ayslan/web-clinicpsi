@@ -1,6 +1,6 @@
 import { action } from "typesafe-actions";
-import { ILoginRequest } from "../../data/interfaces/ILoginRequest";
-import { ILoginResponse } from "../../data/interfaces/ILoginResponse";
+import { ILoginRequest } from "../../data/interfaces/auth/ILoginRequest";
+import { ILoginResponse } from "../../data/interfaces/auth/ILoginResponse";
 
 export enum AuthActionKeys {
   AUTH_LOGIN_REQUEST = 'AUTH_LOGIN_REQUEST',

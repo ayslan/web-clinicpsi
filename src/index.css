@@ -39,3 +39,8 @@ main {
     float: right;
     margin-top: 15px;
 }
+
+.ant-table-content th div {
+    font-weight: bold;
+    font-size: .9rem;
+}

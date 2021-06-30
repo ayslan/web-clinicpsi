@@ -1,8 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import { Breadcrumb, BreadcrumbProps, PageHeader } from 'antd';
-
 import styles from './PageContent.module.scss';
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined } from "@ant-design/icons";
 
 export interface IPageHeader {
     title: string;
@@ -13,8 +12,8 @@ export interface IPageHeader {
 
 const PageContent: FC<IPageHeader> = (props) => {
 
-    const breadCrumb = <Breadcrumb>
-        <Breadcrumb.Item href="">
+    const breadCrumbDefault = <Breadcrumb>
+        <Breadcrumb.Item href="/">
             <HomeOutlined />
         </Breadcrumb.Item>
         <Breadcrumb.Item>{props.title}</Breadcrumb.Item>
@@ -22,7 +21,7 @@ const PageContent: FC<IPageHeader> = (props) => {
 
     return (
         <div className={`${styles['container']} ${props.className ? props.className : ''}`}>
-            <PageHeader title={props.title} className={styles['title']} breadcrumb={props.breadCrumb ?? breadCrumb} />
+            <PageHeader title={props.title} className={styles['title']} breadcrumb={props.breadCrumb ?? breadCrumbDefault} />
             <div className={styles['children']}>{props.children}</div>
         </div>
     );

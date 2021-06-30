@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { Http } from "../utils/Http";
-import { ILoginRequest } from "./interfaces/ILoginRequest";
-import { ILoginResponse } from "./interfaces/ILoginResponse";
+import { ILoginRequest } from "./interfaces/auth/ILoginRequest";
+import { ILoginResponse } from "./interfaces/auth/ILoginResponse";
 
 export class AuthApi {
   static async signIn(body: ILoginRequest): Promise<AxiosResponse<ILoginResponse>> {
