@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { FC } from 'react';
 import PageContent from '../../components/ui/pageContent';
 import { IClientResponse } from '../../data/interfaces/clients/IClientsResponse';
+import { history } from '../../store';
 import { getColumns } from './Clients.columns';
 import styles from './Clients.module.scss';
 
@@ -40,7 +41,7 @@ const Clients: FC = () => {
                 :
                 <>
                     <div className={styles['toolBar']}>
-                        <Button type='primary'>Novo Cliente</Button>
+                        <Button type='primary' onClick={() => history.push('/clients/form')}>Novo Cliente</Button>
                         <Button type='default' >Importar Clientes</Button>
                         <Button className='btn-green' type='primary'>Exportar Excel</Button>
                     </div>

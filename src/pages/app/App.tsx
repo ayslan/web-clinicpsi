@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router';
 import Login from '../auth/login';
 import Dashboard from '../dashboard';
 import Clients from '../clients';
+import ClientForm from '../clients/form';
 
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
@@ -51,6 +52,7 @@ const App: FC = () => {
           <Switch>
             <Route path='/' exact component={Dashboard} />
             <Route path='/clients' exact component={Clients} />
+            <Route path='/clients/form' exact component={ClientForm} />
           </Switch>
         </ShellHost>
         :
