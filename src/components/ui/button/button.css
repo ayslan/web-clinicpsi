@@ -3,7 +3,7 @@ button.ant-btn {
   border-radius: 2px;
   cursor: pointer;
 
-  font-family: Open Sans;
+  font-family: "Nunito", sans-serif !important;
   font-style: normal;
   font-weight: 600;
   font-size: 14px;

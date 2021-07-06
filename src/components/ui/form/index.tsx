@@ -4,6 +4,7 @@ import { Form as FormReact } from 'react-final-form';
 import arrayMutators from 'final-form-arrays';
 import { Decorator, Mutator } from 'final-form';
 import { ObjectSchema } from 'yup';
+import { CSSProperties } from 'react';
 
 export interface IForm {
     onSubmit: (values?: any, erros?: string[]) => void;
@@ -15,6 +16,7 @@ export interface IForm {
     children?: React.ReactNode;
     isSubmited?: boolean;
     resetForm?: boolean;
+    style?: CSSProperties;
 }
 
 const Form: FC<IForm> = ({
@@ -27,6 +29,7 @@ const Form: FC<IForm> = ({
     children,
     isSubmited,
     resetForm,
+    style
 }) => {
     let formProps: any;
 
@@ -55,7 +58,7 @@ const Form: FC<IForm> = ({
     };
 
     return (
-        <div className={`${styles['Form']} ${className || ''}`}>
+        <div className={`${styles['Form']} ${className || ''}`} style={style}>
             <FormReact
                 onSubmit={(values) => onSubmit(values)}
                 initialValues={initialValues}
@@ -73,7 +76,7 @@ const Form: FC<IForm> = ({
                     formProps = props;
                     return (
                         <form onSubmit={(e) => {
-                            
+
                             props.handleSubmit(e);
                             if (resetForm && formProps.valid) {
                                 props.form.reset();
@@ -88,7 +91,7 @@ const Form: FC<IForm> = ({
                 }
                 }
             </FormReact>
-        </div>
+        </div >
     );
 };
 
