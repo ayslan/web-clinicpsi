@@ -1,39 +1,45 @@
-.groupField {
-    display: flex;
-    width: 100%;
-
-    .inputGroup {
-        margin-bottom: 17px;
-    }
-
-    .inputGroup:not(:last-child) {
-        margin-right: 10px;
-        margin-bottom: 17px;
-    }
-
-    input {
+.container {
+    .groupField {
+        display: flex;
         width: 100%;
-    }
 
-    .selectGroup {
-        display: table-cell;
+        .inputGroup {
+            margin-bottom: 17px;
+        }
 
-        &:not(:last-child) {
-            padding-right: 10px;
+        .inputGroup:not(:last-child) {
+            margin-right: 10px;
+            margin-bottom: 17px;
+        }
+
+        input {
+            width: 100%;
+        }
+
+        .selectGroup {
+            display: table-cell;
+
+            &:not(:last-child) {
+                padding-right: 10px;
+            }
         }
     }
-}
 
-.inputForm {
-    margin-bottom: 17px;
+    .inputForm {
+        margin-bottom: 17px;
 
-    input,
-    textarea {
+        input,
+        textarea {
+            width: 100%;
+        }
+    }
+
+    .selectForm {
+        display: table-cell;
         width: 100%;
     }
-}
 
-.selectForm {
-    display: table-cell;
-    width: 100%;
+    button:not(last-child) {
+        margin-right: 10px;
+    }
 }
