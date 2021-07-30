@@ -5,14 +5,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route } from 'react-router';
 import Login from '../auth/login';
 import Dashboard from '../dashboard';
-import Clients from '../clients';
-import ClientForm from '../clients/form';
-
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
 import ShellHost from '../../components/shellHost';
 import { COOKIENAME_DEVICEID } from '../../store/auth/Auth.constants';
 import Cookies from 'universal-cookie/es6';
+
+import Clients from '../clients';
+import ClientForm from '../clients/form';
+import Calendar from '../calendar';
 
 interface IApp {
   isAuthenticated: boolean;
@@ -53,6 +54,7 @@ const App: FC = () => {
             <Route path='/' exact component={Dashboard} />
             <Route path='/clients' exact component={Clients} />
             <Route path='/clients/form' exact component={ClientForm} />
+            <Route path='/calendar' exact component={Calendar} />
           </Switch>
         </ShellHost>
         :
