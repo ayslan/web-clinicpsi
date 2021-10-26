@@ -1,0 +1,60 @@
+.containerWrapper {
+    width: 400px;
+    height: 100vh;
+    position: relative;
+    background: #1890ff;
+    left: 0px;
+    background-color: #fff;
+    padding-left: 47px;
+    padding-right: 40px;
+
+    img {
+        margin-left: 80px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        height: 55px;
+    }
+
+    h3 {
+        font-weight: 800;
+        color: #455a64;
+    }
+
+    p {
+        color: #455a64;
+    }
+
+    .contentWrapper {
+        position: relative;
+        top: 10px;
+
+        .input {
+            padding-bottom: 15px;
+
+            input {
+                width: 300px;
+                height: 35px;
+
+                &.focus-visible {
+                    border: red !important;
+                }
+            }
+        }
+
+        button {
+            font-family: "Nunito", sans-serif;
+            width: 300px;
+            height: 35px;
+            margin-top: 10px;
+        }
+
+        .labelForgotPassword {
+            cursor: pointer;
+            color: #9ca8b3 !important;
+            position: relative;
+            left: 87px;
+            top: 26px;
+            font-size: 12px;
+        }
+    }
+}

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route } from 'react-router';
-import Login from '../auth/login';
+import Register from '../auth/register';
 import Dashboard from '../dashboard';
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
@@ -48,7 +48,7 @@ const App: FC = () => {
         draggable
         pauseOnHover
       />
-      {true ?
+      {window.location.pathname.indexOf('/register') == -1 ?
         <ShellHost>
           <Switch>
             <Route path='/' exact component={Dashboard} />
@@ -59,7 +59,7 @@ const App: FC = () => {
         </ShellHost>
         :
         <Switch>
-          {/* <Route path='/login' component={Login} /> */}
+          <Route path='/register' component={Register} />
           {/* <Route path='/' component={Login} /> */}
         </Switch>
       }
