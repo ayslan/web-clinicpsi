@@ -1,12 +1,12 @@
 .containerWrapper {
-    width: 400px;
+    width: 480px;
     height: 100vh;
     position: relative;
     background: #1890ff;
     left: 0px;
     background-color: #fff;
-    padding-left: 47px;
-    padding-right: 40px;
+    padding-left: 50px;
+    padding-right: 50px;
 
     img {
         margin-left: 80px;
@@ -29,10 +29,10 @@
         top: 10px;
 
         .input {
-            padding-bottom: 15px;
+            padding-bottom: 20px;
 
             input {
-                width: 300px;
+                width: 370px;
                 height: 35px;
 
                 &.focus-visible {
@@ -43,7 +43,7 @@
 
         button {
             font-family: "Nunito", sans-serif;
-            width: 300px;
+            width: 370px;
             height: 35px;
             margin-top: 10px;
         }
