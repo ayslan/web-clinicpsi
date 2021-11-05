@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route } from 'react-router';
 import Register from '../auth/register';
+import Login from '../auth/login';
 import Dashboard from '../dashboard';
 import 'antd/dist/antd.css';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
@@ -48,7 +49,7 @@ const App: FC = () => {
         draggable
         pauseOnHover
       />
-      {window.location.pathname.indexOf('/register') == -1 ?
+      {window.location.pathname.indexOf('/register') == -1 && window.location.pathname.indexOf('/login') == -1 ?
         <ShellHost>
           <Switch>
             <Route path='/' exact component={Dashboard} />
@@ -60,7 +61,7 @@ const App: FC = () => {
         :
         <Switch>
           <Route path='/register' component={Register} />
-          {/* <Route path='/' component={Login} /> */}
+          <Route path='/login' component={Login} />
         </Switch>
       }
     </>
