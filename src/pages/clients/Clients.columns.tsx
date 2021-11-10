@@ -4,7 +4,7 @@ import { FaFileAlt, FaPen, } from "react-icons/fa";
 import { getDistinctFilterValues, getFilterSearchProps, sorter } from "../../utils/helpers";
 
 import styles from './Clients.module.scss';
-import { IClientResponse } from "../../data/interfaces/clients/IClientsResponse";
+import { IClientResponse } from "../../data/interfaces/client/IClient";
 
 export const getColumns = (data: IClientResponse[], onEdit?: (clienteIndustria: IClientResponse) => void, onView?: (clienteIndustria: IClientResponse) => void) => {
     return [

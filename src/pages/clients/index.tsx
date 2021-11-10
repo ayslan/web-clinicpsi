@@ -2,7 +2,7 @@ import { Button, Skeleton, Table } from 'antd';
 import React, { useState } from 'react';
 import { FC } from 'react';
 import PageContent from '../../components/ui/pageContent';
-import { IClientResponse } from '../../data/interfaces/clients/IClientsResponse';
+import { IClientResponse } from '../../data/interfaces/client/IClient';
 import { history } from '../../store';
 import { getColumns } from './Clients.columns';
 import styles from './Clients.module.scss';

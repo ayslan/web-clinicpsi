@@ -25,7 +25,7 @@ const Login: FC<Props> = (props) => {
                         <Form onSubmit={() => null} schema={schema}>
                             <Field label='Email' name='email' className={styles['input']}></Field>
                             <Field label='Senha' name='password' type='password' className={styles['input']}></Field>
-                            <Checkbox>Manter conectado</Checkbox>
+                            <Checkbox>Mantenha-me conectado(a) neste aparelho</Checkbox>
                             <Button loading={props.isLoading} type='primary' htmlType='submit'>Login</Button>
                         </Form>
                     </div>

@@ -20,9 +20,9 @@ export function* signIn({ payload }: ReturnType<typeof userLogin>) {
 
 export function* loginSuccess({ payload }: ReturnType<typeof userLoginSuccess>) {
   AuthUtils.setLoggedUser({
-    accessToken: payload.data.access_token,
-    refreshToken: payload.data.refresh_token,
-    expiresIn: payload.data.expires_in,
+    accessToken: payload.data.tokenResponse.access_token,
+    refreshToken: payload.data.tokenResponse.refresh_token,
+    expiresIn: payload.data.tokenResponse.expires_in,
   });
 
   // yield put(AuthActions.getUserInfo()); #revisar
