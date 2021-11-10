@@ -1,9 +1,9 @@
+import { IUserResponse } from '../../../data/interfaces/user/IUser';
 import { IReducerStateBase } from '../../base/interface/IReducerStateBase';
-// import { IUserInforResponse } from '../../../Data/interfaces/Auth/IUserInfoResponse';
 
 export interface IAuthState extends IReducerStateBase {
   accessToken?: string;
   isLogged: boolean;
   hasExpired: boolean;
-  // userInfo?: IUserInforResponse;
+  user?: IUserResponse;
 }
