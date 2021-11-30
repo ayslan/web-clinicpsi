@@ -6,11 +6,11 @@ import { IRegisterRequest } from "./interfaces/auth/IRegister";
 export class AuthApi {
   static async signIn(body: ILoginRequest): Promise<AxiosResponse<ILoginResponse>> {
     const axios = await Http.axios();
-    return axios.post('/Account/Login', body);
+    return axios.post('/account/login', body);
   }
 
   static async register(body: IRegisterRequest): Promise<AxiosResponse<ILoginResponse>> {
     const axios = await Http.axios();
-    return axios.post('/Account/Register', body);
+    return axios.post('/account/register', body);
   }
 }
