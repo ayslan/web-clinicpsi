@@ -38,14 +38,11 @@ const authReducer = (state = initialState, action: AuthActionUnion) => {
 
         case AuthActionKeys.REGISTER_REQUEST:
             return { ...state, isLoading: true };
-        case AuthActionKeys.LOGIN_SUCCESS:
+        case AuthActionKeys.REGISTER_SUCCESS:
             return {
                 ...state,
                 isLogged: true,
                 isLoading: false,
-                accessToken: action.payload.tokenResponse.access_token,
-                message: undefined,
-                error: undefined,
             };
 
         case AuthActionKeys.DEFAULT_FAILED:

@@ -3,6 +3,7 @@ import { history } from '../';
 import { AuthApi } from '../../data/Auth.api';
 import { AuthUtils } from '../../utils/AuthUtils';
 import { AuthActions, LoginAction, LoginSuccessAction, RegisterAction } from './Auth.actions';
+import { toast } from "react-toastify";
 
 export function* signIn({ payload }: LoginAction) {
   try {
@@ -20,10 +21,14 @@ export function* register({ payload }: RegisterAction) {
   try {
     const { data } = yield call(AuthApi.register, payload);
     yield put(AuthActions.registerSuccess(data.data));
+
+    toast.success('Cadastro realizado com sucesso!');
+    history.push('/login');
   } catch (e) {
 
-    const error = e.errors && e.errors.length ? e.errors[0].Message : 'Erro ao se cadastrar';
-    //   toastHandler.showError(error); #revisar
+    const error = e.errors && e.errors.length ? e.errors[0].message : 'Erro ao se cadastrar';
+    console.log(error);
+    toast.error(error);
     yield put(AuthActions.defaultFailure(error));
   }
 }

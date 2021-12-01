@@ -22,19 +22,15 @@ interface IApp {
 
 const App: FC = () => {
 
-  if (process.env.REACT_APP_AMBIENTE == 'PRODUCTION' && window.location.origin.indexOf('integracao.rbrltda.com.br') == -1) {
-    window.location.href = 'https://integracao.rbrltda.com.br';
-  }
+  // const cookies = new Cookies();
+  // var deviceId = cookies.get(COOKIENAME_DEVICEID)
 
-  const cookies = new Cookies();
-  var deviceId = cookies.get(COOKIENAME_DEVICEID)
-
-  if (deviceId == undefined || deviceId == "") {
-    var d = new Date();
-    deviceId = d.getDate() + "" + d.getMonth() + "" + d.getFullYear() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
-    deviceId += "-" + Math.floor((Math.random()) * 0x10000)
-    cookies.set(COOKIENAME_DEVICEID, deviceId, { path: '/' });
-  }
+  // if (deviceId == undefined || deviceId == "") {
+  //   var d = new Date();
+  //   deviceId = d.getDate() + "" + d.getMonth() + "" + d.getFullYear() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
+  //   deviceId += "-" + Math.floor((Math.random()) * 0x10000)
+  //   cookies.set(COOKIENAME_DEVICEID, deviceId, { path: '/' });
+  // }
 
   return (
     <>
