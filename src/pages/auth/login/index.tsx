@@ -8,9 +8,15 @@ import schema from './Login.schema';
 import logo from '../../../static/images/logo.png'
 import { Button, Checkbox } from 'antd';
 import { IGlobalReducerState } from '../../../store/base/interface/IGlobalReducerState';
+import { ILoginRequest } from '../../../data/interfaces/auth/ILogin';
+import { AuthActions } from '../../../store/auth/Auth.actions';
 
 const Login: FC<Props> = (props) => {
     const dispatch = useDispatch();
+
+    const onLogin = (values: ILoginRequest) => {
+        dispatch(AuthActions.login(values));
+    }
 
     return (
         <>
@@ -22,7 +28,7 @@ const Login: FC<Props> = (props) => {
                     <h3>Acesse sua Conta</h3>
                     <p>Informe seu email e senha para acessar sua conta!</p>
                     <div className={styles['contentWrapper']}>
-                        <Form onSubmit={() => null} schema={schema}>
+                        <Form onSubmit={onLogin} schema={schema}>
                             <Field label='Email' name='email' className={styles['input']}></Field>
                             <Field label='Senha' name='password' type='password' className={styles['input']}></Field>
                             <Checkbox>Mantenha-me conectado(a) neste aparelho</Checkbox>

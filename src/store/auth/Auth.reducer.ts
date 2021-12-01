@@ -32,8 +32,8 @@ const authReducer = (state = initialState, action: AuthActionUnion) => {
                 isLogged: true,
                 isLoading: false,
                 accessToken: action.payload.tokenResponse.access_token,
-                message: undefined,
-                error: undefined,
+                refreshToken: action.payload.tokenResponse.refresh_token,
+                expiresAt: action.payload.tokenResponse.expires_in
             };
 
         case AuthActionKeys.REGISTER_REQUEST:
@@ -52,7 +52,6 @@ const authReducer = (state = initialState, action: AuthActionUnion) => {
                 accessToken: undefined,
                 isLogged: false,
                 error: action.payload,
-                message: undefined,
             };
         default:
             return state;
