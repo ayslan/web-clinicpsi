@@ -15,22 +15,13 @@ import Cookies from 'universal-cookie/es6';
 import Clients from '../clients';
 import ClientForm from '../clients/form';
 import Calendar from '../calendar';
+import { isAuthenticatedSelector } from '../../store/auth/Auth.selector';
 
 interface IApp {
   isAuthenticated: boolean;
 }
 
-const App: FC = () => {
-
-  // const cookies = new Cookies();
-  // var deviceId = cookies.get(COOKIENAME_DEVICEID)
-
-  // if (deviceId == undefined || deviceId == "") {
-  //   var d = new Date();
-  //   deviceId = d.getDate() + "" + d.getMonth() + "" + d.getFullYear() + "" + d.getHours() + "" + d.getMinutes() + "" + d.getSeconds();
-  //   deviceId += "-" + Math.floor((Math.random()) * 0x10000)
-  //   cookies.set(COOKIENAME_DEVICEID, deviceId, { path: '/' });
-  // }
+const App: FC<IApp> = ({ isAuthenticated }) => {
 
   return (
     <>
@@ -45,7 +36,7 @@ const App: FC = () => {
         draggable
         pauseOnHover
       />
-      {window.location.pathname.indexOf('/register') == -1 && window.location.pathname.indexOf('/login') == -1 ?
+      {isAuthenticated ?
         <ShellHost>
           <Switch>
             <Route path='/' exact component={Dashboard} />
@@ -58,18 +49,17 @@ const App: FC = () => {
         <Switch>
           <Route path='/register' component={Register} />
           <Route path='/login' component={Login} />
+          <Route path='/' exact component={Login} />
         </Switch>
       }
     </>
   );
 }
 
-// const mapStateProps = (state: IGlobalReducerState) => {
-//   return {
-//     isAuthenticated: isAuthenticatedSelector(state),
-//   };
-// };
+const mapStateProps = (state: IGlobalReducerState) => {
+  return {
+    isAuthenticated: isAuthenticatedSelector(state),
+  };
+};
 
-// export default connect(mapStateProps)(App);
-
-export default App;
+export default connect(mapStateProps)(App);
