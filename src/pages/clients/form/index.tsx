@@ -7,20 +7,11 @@ import Form from "../../../components/ui/form";
 import PageContent from "../../../components/ui/pageContent";
 import Select, { IOptionData } from "../../../components/ui/select";
 import TextArea from "../../../components/ui/textArea";
+import { AgeGroupEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, MaritalStatusEnum, ServiceModalityEnum } from "../../../data/interfaces/client/IClient";
 import { history } from "../../../store";
+import { convertEnumToOptionData } from "../../../utils/enumHelper";
 import styles from './ClientForm.module.scss';
 const { TabPane } = Tabs;
-
-const optionsEstadoCivil = [
-    {
-        text: 'Solteiro',
-        value: 'Solteiro'
-    },
-    {
-        text: 'Casado',
-        value: 'Casado'
-    }
-] as IOptionData[];
 
 const ClientForm: FC = () => {
 
@@ -34,22 +25,26 @@ const ClientForm: FC = () => {
                 <>
                     <div>
                         <Form onSubmit={() => null}>
-                            <Tabs style={{ height: '540px' }}>
+                            <Tabs style={{ height: '620px' }}>
                                 <TabPane tab="Dados Pessoais" key="1">
                                     <div style={{ maxWidth: 700 }}>
                                         <div className={styles['groupField']}>
-                                            <Field autoComplete='false' key='name' label='Nome*' name='name' style={{ width: '66%' }} className={styles['inputGroup']}></Field>
-                                            <Select name='group' label='Grupo*' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Field autoComplete='false' key='name' label='Nome*' name='name' style={{ width: '100%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Field type={'date'} autoComplete='false' key='data' label='Data de Nascimento*' name='data' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
-                                            <Select name='sexo' label='Sexo*' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
-                                            <Select name='civil' label='Estado Civil' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
-                                            <Field autoComplete='false' key='cpf' label='CPF' name='cpf' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <Select name='group' label='Grupo*' options={convertEnumToOptionData(AgeGroupEnum)} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select name='status' label='Status*' options={convertEnumToOptionData(ClientStatusEnum)} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='serviceModality' label='Modalidade*' options={convertEnumToOptionData(ServiceModalityEnum)} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                         </div>
                                         <div className={styles['groupField']}>
+                                            <Field type={'date'} autoComplete='false' key='data' label='Data de Nascimento*' name='data' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                            <Select name='sexo' label='Sexo*' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='civil' label='Estado Civil' options={convertEnumToOptionData(MaritalStatusEnum)} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                        </div>
+                                        <div className={styles['groupField']}>
+                                            <Field autoComplete='false' key='cpf' label='CPF' name='cpf' style={{ width: '34%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='rg' label='RG' name='rg' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
-                                            <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '66%' }} placeholder='Informe TAGS para o cliente' options={optionsEstadoCivil} />
+                                            <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '33%' }} placeholder='Informe TAGS para o cliente' />
                                         </div>
                                         <TextArea rows={2} autoComplete='false' key='observacao' label='Obeservação' name='observacao' className={styles['inputForm']}></TextArea>
 
@@ -64,7 +59,7 @@ const ClientForm: FC = () => {
                                 <TabPane tab="Dados de Cobrança" key="2">
                                     <div style={{ maxWidth: 700 }}>
                                         <div className={styles['groupField']}>
-                                            <Select name='group' label='Convênio' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='group' label='Convênio' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                             <Field autoComplete='false' key='name' label='Valor Consulta' name='name' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='name' label='Valor Repasse Convênio' name='name' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
@@ -74,7 +69,7 @@ const ClientForm: FC = () => {
                                     <div style={{ maxWidth: 700 }}>
                                         <div style={{ maxWidth: 700 }}>
                                             <div className={styles['groupField']}>
-                                                <Select name='educationLevel' label='Escolaridade' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                                <Select name='educationLevel' label='Escolaridade' options={convertEnumToOptionData(EducationLevelEnum)} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                                 <Field autoComplete='false' key='occupation' label='Profissão' name='occupation' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                                 <Field autoComplete='false' key='religion' label='Religião' name='religion' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                             </div>
@@ -94,9 +89,9 @@ const ClientForm: FC = () => {
                                             <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='state' label='Estado' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
-                                            <Select name='city' label='Cidade' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
-                                            <Select name='country' label='País' options={optionsEstadoCivil} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='state' label='Estado' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='city' label='Cidade' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='country' label='País' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                         </div>
                                     </div>
                                 </TabPane>

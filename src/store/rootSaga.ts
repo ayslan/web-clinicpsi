@@ -1,15 +1,16 @@
 import { all, takeLatest } from "redux-saga/effects";
 import { AuthActionKeys } from "./auth/Auth.actions";
-import { loginSuccess, register, login } from "./auth/Auth.sagas";
+import { loginSuccess, register as registerUser, login } from "./auth/Auth.sagas";
 import { ClientActionKeys } from "./client/Client.actions";
-import { list } from "./client/Client.sagas";
+import { list as listClients, register as registerClient } from "./client/Client.sagas";
 
 export function* rootSaga() {
     yield all([
         takeLatest(AuthActionKeys.LOGIN_REQUEST, login),
         takeLatest(AuthActionKeys.LOGIN_SUCCESS, loginSuccess),
-        takeLatest(AuthActionKeys.REGISTER_REQUEST, register),
+        takeLatest(AuthActionKeys.REGISTER_REQUEST, registerUser),
 
-        takeLatest(ClientActionKeys.LIST_REQUEST, list),
+        takeLatest(ClientActionKeys.LIST_REQUEST, listClients),
+        takeLatest(ClientActionKeys.REGISTER_REQUEST, registerClient),
     ]);
 }

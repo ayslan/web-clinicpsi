@@ -46,49 +46,49 @@ export interface IClientResponse {
 }
 
 export enum MaritalStatusEnum {
-    Single = 1,
-    Married = 2,
-    Widowed = 3,
-    Divorced = 4,
-    DomesticPartnership = 5
+    'Solteiro(a)' = 1, //Single
+    'Casado(a)' = 2, //Married
+    'Viúvo(a)' = 3, //Widowed
+    'Divorciado(a)' = 4, //Divorced
+    'União Estável' = 5 //DomesticPartnership
 }
 
 export enum ClientStatusEnum {
-    Active = 1,
-    Inactive = 2,
-    Withdrawal = 3,
-    Discharge = 4,
-    Death = 5
+    'Ativo' = 1, //Active
+    'Inativo' = 2, //Inactive
+    'Cancelado' = 3, //Withdrawal
+    'Alta' = 4, //Discharge
+    'Falecido(a)' = 5 //Death
 }
 
 export enum ServiceModalityEnum {
-    Personal = 1,
-    Online = 2
+    'Presencial' = 1,//Personal
+    'Online' = 2
 }
 
 export enum EducationLevelEnum {
-    Kindergarten = 1, //jardim de infancia
-    ElementarySchool = 2, //1 a 5 serie
-    MiddleSchool = 3, //6 a 9 serie
-    HighSchool = 4, //ensino medio
-    AssociatesDegree = 5, //ensino tecnico
-    BachelorsDegree = 6, //ensino superior
-    GraduateSchool = 7, //pos graduação+
+    'Jardim de Infância' = 1, //Kindergarten
+    '1ª a 5ª Série' = 2, //ElementarySchool
+    '6º ao 9º Ano' = 3, //MiddleSchool
+    'Ensino Médio' = 4, //HighSchool
+    'Ensino Técnico' = 5, //AssociatesDegree
+    'Ensino Superior' = 6, //BachelorsDegree
+    'Pós Graduação+' = 7, //GraduateSchool
 }
 
 export enum AgeGroupEnum {
-    Child = 1,
-    Teenager = 2,
-    Adulto = 3,
-    Senior = 4
+    'Criança' = 1, //Child
+    'Adolescente' = 2, //Teenager
+    'Adulto' = 3,
+    'Idoso' = 4 //Senior
 }
 
 export enum GenderEnum {
-    Male = 1,
-    Female = 2
+    'Masculino' = 1, //Male
+    'Feminino' = 2 //Female
 }
 
 export enum CalculationTypeEnum {
-    Percentage = 1,
-    Value = 2
+    'Porcentagem' = 1, //Percentage
+    'Valor' = 2 //Value
 }
