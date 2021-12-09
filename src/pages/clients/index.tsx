@@ -1,36 +1,22 @@
 import { Button, Skeleton, Table } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
-import { useDispatch } from 'react-redux';
+import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import PageContent from '../../components/ui/pageContent';
 import { IClientResponse } from '../../data/interfaces/client/IClient';
 import { history } from '../../store';
+import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
+import { ClientActions } from '../../store/client/Client.actions';
 import { getColumns } from './Clients.columns';
 import styles from './Clients.module.scss';
 
-const clients = [
-    {
-        clientId: 'a',
-        name: 'Cliente 1',
-        email: 'cliente1@email.com',
-        phone: '62 985349136'
-    },
-    {
-        clientId: 'ab',
-        name: 'Cliente 2',
-        email: 'cliente2@email.com',
-        phone: '62 888884444'
-    }
-] as IClientResponse[];
-
-const Clients: FC = () => {
+const Clients: FC<Props> = (props) => {
     var dispatch = useDispatch();
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     useEffect(() => {
-
-    }, []);
-
+        dispatch(ClientActions.list());
+    }, [window.location.pathname]);
 
     const rowSelection = {
         selectedRowKeys: selectedRowKeys,
@@ -41,7 +27,7 @@ const Clients: FC = () => {
 
     return <>
         <PageContent title='Clientes' className={styles['container']}>
-            {false ?
+            {props.isLoading ?
                 <Skeleton active />
                 :
                 <>
@@ -51,12 +37,12 @@ const Clients: FC = () => {
                         <Button className='btn-green' type='primary'>Exportar Excel</Button>
                     </div>
                     <div className={styles['qtdeRows']}>
-                        {0} registros
+                        {props.clients.length} registros
                     </div>
                     <Table
                         rowSelection={{ type: 'checkbox', ...rowSelection }}
-                        columns={getColumns(clients)}
-                        dataSource={clients.map((data, index) => ({ ...data, key: data.clientId }))}
+                        columns={getColumns(props.clients)}
+                        dataSource={props.clients.map((data) => ({ ...data, key: data.clientId }))}
                         style={{ overflowY: 'auto' }}
                         pagination={{ pageSize: 100, position: ['bottomRight'], showSizeChanger: false }} />
                 </>
@@ -65,4 +51,16 @@ const Clients: FC = () => {
     </>;
 }
 
-export default Clients;
+
+const mapState = (state: IGlobalReducerState) => ({
+    ...state.client
+});
+
+const connector = connect(
+    mapState,
+);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux;
+
+export default connector(Clients);
