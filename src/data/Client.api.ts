@@ -7,4 +7,9 @@ export class ClientApi {
     const axios = await Http.axios();
     return axios.get('/clients');
   }
+
+  static async register(body: IClientResponse): Promise<AxiosResponse<IClientResponse>> {
+    const axios = await Http.axios();
+    return axios.post('/clients', body);
+  }
 }

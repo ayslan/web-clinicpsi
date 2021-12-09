@@ -6,7 +6,7 @@ const initialState: IClientState = {
     clients: []
 };
 
-const clientReducer = (state = initialState, action: ClientActionUnion) => {
+const clientReducer = (state = initialState, action: ClientActionUnion): IClientState => {
     switch (action.type) {
         case ClientActionKeys.LIST_REQUEST:
             return { ...state, isLoading: true };
@@ -15,6 +15,15 @@ const clientReducer = (state = initialState, action: ClientActionUnion) => {
                 ...state,
                 isLoading: false,
                 clients: action.payload
+            };
+
+        case ClientActionKeys.REGISTER_REQUEST:
+            return { ...state, isLoading: true };
+        case ClientActionKeys.REGISTER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                clients: [...state.clients, action.payload]
             };
 
         case ClientActionKeys.DEFAULT_FAILED:
