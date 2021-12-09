@@ -20,7 +20,7 @@ export function* register({ payload }: RegisterAction) {
     const { data } = yield call(ClientApi.register, payload);
     yield put(ClientActions.registerSuccess(data.data));
     toast.success('Cliente cadastrado com sucesso!');
-    history.push('clients');
+    history.push('/clients');
   } catch (e) {
     const error = e.errors && e.errors.length ? e.errors[0].Message : 'Erro ao cadastrar cliente';
     toast.error(error);

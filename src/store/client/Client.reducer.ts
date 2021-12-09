@@ -8,18 +8,18 @@ const initialState: IClientState = {
 
 const clientReducer = (state = initialState, action: ClientActionUnion): IClientState => {
     switch (action.type) {
-        case ClientActionKeys.LIST_REQUEST:
+        case ClientActionKeys.CLIENT_LIST_REQUEST:
             return { ...state, isLoading: true };
-        case ClientActionKeys.LIST_SUCCESS:
+        case ClientActionKeys.CLIENT_LIST_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 clients: action.payload
             };
 
-        case ClientActionKeys.REGISTER_REQUEST:
+        case ClientActionKeys.CLIENT_REGISTER_REQUEST:
             return { ...state, isLoading: true };
-        case ClientActionKeys.REGISTER_SUCCESS:
+        case ClientActionKeys.CLIENT_REGISTER_SUCCESS:
             return {
                 ...state,
                 isLoading: false,

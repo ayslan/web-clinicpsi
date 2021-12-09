@@ -10,7 +10,7 @@ export function* rootSaga() {
         takeLatest(AuthActionKeys.LOGIN_SUCCESS, loginSuccess),
         takeLatest(AuthActionKeys.REGISTER_REQUEST, registerUser),
 
-        takeLatest(ClientActionKeys.LIST_REQUEST, listClients),
-        takeLatest(ClientActionKeys.REGISTER_REQUEST, registerClient),
+        takeLatest(ClientActionKeys.CLIENT_LIST_REQUEST, listClients),
+        takeLatest(ClientActionKeys.CLIENT_REGISTER_REQUEST, registerClient),
     ]);
 }
