@@ -1,5 +1,5 @@
 export interface IClientResponse {
-    id: string;
+    clientId: string;
     name: string;
     email: string;
     phone: string;

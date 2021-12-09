@@ -63,7 +63,7 @@ export class Http {
         baseURL: process.env.REACT_APP_BASE_API_URL,
       });
 
-      instanceToRefresh.post('/Account/RefreshToken', {
+      instanceToRefresh.post('/account/refreshtoken', {
         RefreshToken: user.refreshToken,
       }).then(({ data }) => {
         const result = JSON.parse(data.data);

@@ -1,6 +1,7 @@
 import { Button, Skeleton, Table } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
+import { useDispatch } from 'react-redux';
 import PageContent from '../../components/ui/pageContent';
 import { IClientResponse } from '../../data/interfaces/client/IClient';
 import { history } from '../../store';
@@ -9,13 +10,13 @@ import styles from './Clients.module.scss';
 
 const clients = [
     {
-        id: 'a',
+        clientId: 'a',
         name: 'Cliente 1',
         email: 'cliente1@email.com',
         phone: '62 985349136'
     },
     {
-        id: 'ab',
+        clientId: 'ab',
         name: 'Cliente 2',
         email: 'cliente2@email.com',
         phone: '62 888884444'
@@ -23,7 +24,12 @@ const clients = [
 ] as IClientResponse[];
 
 const Clients: FC = () => {
+    var dispatch = useDispatch();
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+    useEffect(() => {
+
+    }, []);
 
 
     const rowSelection = {
@@ -50,7 +56,7 @@ const Clients: FC = () => {
                     <Table
                         rowSelection={{ type: 'checkbox', ...rowSelection }}
                         columns={getColumns(clients)}
-                        dataSource={clients.map((data, index) => ({ ...data, key: data.id }))}
+                        dataSource={clients.map((data, index) => ({ ...data, key: data.clientId }))}
                         style={{ overflowY: 'auto' }}
                         pagination={{ pageSize: 100, position: ['bottomRight'], showSizeChanger: false }} />
                 </>
