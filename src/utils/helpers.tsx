@@ -22,7 +22,7 @@ export const getDistinctFilterValues = (object: any, prop: string) => {
     });
 
     return filters.sort((a, b) => {
-        return a.value?.toString().localeCompare(b.value.toString());
+        return a.value?.toString().localeCompare(b.value?.toString());
     });
 }
 

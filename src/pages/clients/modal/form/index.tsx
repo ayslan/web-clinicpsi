@@ -1,37 +1,59 @@
-import { Button, Divider, Skeleton, Tabs, } from "antd";
-import React, { FC } from "react";
+import { Button, Divider, Modal, Skeleton, Tabs, } from "antd";
+import { useEffect } from "preact/hooks";
+import React, { FC, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
-import { IBreadCrumb } from "../../../components/interfaces/IBreadCrumb";
-import Field from "../../../components/ui/field";
-import Form from "../../../components/ui/form";
-import PageContent from "../../../components/ui/pageContent";
-import Select, { IOptionData } from "../../../components/ui/select";
-import TextArea from "../../../components/ui/textArea";
-import { AgeGroupEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../data/interfaces/client/IClient";
-import { IGlobalReducerState } from "../../../store/base/interface/IGlobalReducerState";
-import { ClientActions } from "../../../store/client/Client.actions";
-import { convertEnumToOptionData } from "../../../utils/enumHelper";
+import Field from "../../../../components/ui/field";
+import Form from "../../../../components/ui/form";
+import Select, { IOptionData } from "../../../../components/ui/select";
+import TextArea from "../../../../components/ui/textArea";
+import { AgeGroupEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../../data/interfaces/client/IClient";
+import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
+import { ClientActions } from "../../../../store/client/Client.actions";
+import { convertEnumToOptionData } from "../../../../utils/enumHelper";
 import styles from './ClientForm.module.scss';
 import schema from "./ClientForm.schema";
 const { TabPane } = Tabs;
 
+export interface IClientForm {
+    visible: boolean;
+    onClose: () => void;
+    isNewClient?: boolean;
+}
+
 const ClientForm: FC<Props> = (props) => {
     const dispatch = useDispatch();
-    const breadCrumb = [{ name: 'Clientes', location: '/clients' }, { name: 'Novo Cliente' }] as IBreadCrumb[];
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
     const register = (values: IClientResponse) => {
-        if (values)
+        if (values) {
             dispatch(ClientActions.register(values));
+            setIsSending(true);
+        }
+
+        setIsSubmit(false);
     }
 
+    if (!props.isLoading && isSending) {
+        setIsSending(false);
+        props.onClose();
+    }
+
+    var buttons =
+        [
+            <Button onClick={props.onClose} type='link'>Cancelar</Button>,
+            <Button type='primary' htmlType='submit' onClick={() => setIsSubmit(true)} >Cadastrar</Button>,
+            <Button className='btn-green' type='primary' onClick={() => setIsSubmit(true)}>Cadastrar e Agendar Sessão</Button>,
+        ];
+
     return <>
-        <PageContent title='Novo Cliente' className={styles['container']} breadCrumb={breadCrumb}>
-            {false ?
-                <Skeleton active />
-                :
-                <>
-                    <div>
-                        <Form onSubmit={register} schema={schema}>
+        <Form onSubmit={register} schema={schema} isSubmited={isSubmit}>
+            <Modal className={styles['container']} title={props.isNewClient ? 'Novo Cliente' : 'Atualizar Cliente'} visible={props.visible} footer={buttons} closable={false} destroyOnClose={true} width={858}>
+                {props.isLoading ?
+                    <Skeleton active />
+                    :
+                    <>
+                        <div>
                             <Tabs style={{ height: '520px' }}>
                                 <TabPane tab="Dados Pessoais" key="1">
                                     <div style={{ maxWidth: 850 }}>
@@ -52,7 +74,7 @@ const ClientForm: FC<Props> = (props) => {
                                             <Select name='serviceModality' label='Modalidade' options={convertEnumToOptionData(ServiceModalityEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                         </div>
                                         <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '25%' }} placeholder='Informe TAGS para o cliente' />
-                                        <TextArea rows={4} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextArea>
+                                        <TextArea rows={3} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextArea>
                                     </div>
                                 </TabPane>
                                 <TabPane tab="Dados de Cobrança" key="2">
@@ -94,16 +116,11 @@ const ClientForm: FC<Props> = (props) => {
                                     </div>
                                 </TabPane>
                             </Tabs>
-                            <div>
-                                <Button type='primary' htmlType='submit' >Cadastrar</Button>
-                                <Button className='btn-green' type='primary'>Cadastrar e Agendar Sessão</Button>
-                                <Button type='link' >Cancelar</Button>
-                            </div>
-                        </Form>
-                    </div>
-                </>
-            }
-        </PageContent>
+                        </div>
+                    </>
+                }
+            </Modal>
+        </Form>
     </>;
 }
 
@@ -112,11 +129,11 @@ const mapState = (state: IGlobalReducerState) => ({
     ...state.client,
 });
 
-
 const connector = connect(
     mapState,
 );
 
-type Props = ConnectedProps<typeof connector>;
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux & IClientForm;
 
 export default connector(ClientForm);

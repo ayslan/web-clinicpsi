@@ -13,7 +13,6 @@ import { COOKIENAME_DEVICEID } from '../../store/auth/Auth.constants';
 import Cookies from 'universal-cookie/es6';
 
 import Clients from '../clients';
-import ClientForm from '../clients/form';
 import Calendar from '../calendar';
 import { isAuthenticatedSelector } from '../../store/auth/Auth.selector';
 
@@ -41,7 +40,6 @@ const App: FC<IApp> = ({ isAuthenticated }) => {
           <Switch>
             <Route path='/' exact component={Dashboard} />
             <Route path='/clients' exact component={Clients} />
-            <Route path='/clients/form' exact component={ClientForm} />
             <Route path='/calendar' exact component={Calendar} />
           </Switch>
         </ShellHost>

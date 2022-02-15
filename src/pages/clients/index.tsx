@@ -9,11 +9,13 @@ import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerSt
 import { ClientActions } from '../../store/client/Client.actions';
 import { getColumns } from './Clients.columns';
 import styles from './Clients.module.scss';
+import ClientForm from './modal/form'
 
 const Clients: FC<Props> = (props) => {
     var dispatch = useDispatch();
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
+    const [formClientVisible, setFormClientVisible] = useState(false);
+    
     useEffect(() => {
         dispatch(ClientActions.list());
     }, [window.location.pathname]);
@@ -32,7 +34,7 @@ const Clients: FC<Props> = (props) => {
                 :
                 <>
                     <div className={styles['toolBar']}>
-                        <Button type='primary' onClick={() => history.push('/clients/form')}>Novo Cliente</Button>
+                        <Button type='primary' onClick={() => setFormClientVisible(true)}>Novo Cliente</Button>
                         <Button type='default' >Importar Clientes</Button>
                         <Button className='btn-green' type='primary'>Exportar Excel</Button>
                     </div>
@@ -48,6 +50,7 @@ const Clients: FC<Props> = (props) => {
                 </>
             }
         </PageContent>
+        <ClientForm visible={formClientVisible} isNewClient={true} onClose={() => setFormClientVisible(false)} ></ClientForm>
     </>;
 }
 

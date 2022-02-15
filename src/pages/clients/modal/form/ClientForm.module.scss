@@ -1,4 +1,8 @@
 .container {
+    [class*="ant-modal-body"] {
+        height: 520px !important;
+    }
+
     .groupField {
         display: flex;
         width: 100%;
