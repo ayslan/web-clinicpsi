@@ -58,13 +58,13 @@ const ClientForm: FC<Props> = (props) => {
                                 <TabPane tab="Dados Pessoais" key="1">
                                     <div style={{ maxWidth: 850 }}>
                                         <div className={styles['groupField']}>
-                                            <Field autoComplete='false' key='name' label='Nome*' name='name' style={{ width: '75%' }} className={styles['inputGroup']}></Field>
-                                            <Field type={'date'} autoComplete='false' key='birthDate' label='Data de Nascimento*' name='birthDate' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <Field autoComplete='false' isRequired={true} key='name' label='Nome' name='name' style={{ width: '75%' }} className={styles['inputGroup']}></Field>
+                                            <Field type={'date'} isRequired={true} autoComplete='false' key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='gender' label='Sexo*' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
-                                            <Select name='status' label='Status*' options={convertEnumToOptionData(ClientStatusEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
-                                            <Field autoComplete='false' key='phone' label='Telefone*' name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <Select name='gender' isRequired={true} label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
+                                            <Select name='status' isRequired={true} label='Status' options={convertEnumToOptionData(ClientStatusEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
+                                            <Field autoComplete='false' key='phone' label='Telefone' isRequired={true} name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <Select name='ageGroup' label='Grupo' options={convertEnumToOptionData(AgeGroupEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                         </div>
                                         <div className={styles['groupField']}>

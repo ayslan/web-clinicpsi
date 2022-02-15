@@ -18,6 +18,7 @@ export interface ISelect {
   options?: IOptionData[],
   placeholder?: string,
   showAddItem?: boolean,
+  isRequired?: boolean,
 
   onFocus?: () => void;
   onBlur?: () => void;
@@ -40,7 +41,8 @@ const hasError = (meta: any, disabled?: boolean) => (
 
 const Select: FC<ISelect> = ({
   label, style, styleSelect, className, name, defaultValue, autoComplete,
-  onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem, showAddItem, mode
+  onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem,
+  showAddItem, mode, isRequired
 }) => {
 
   const [newItem, setNewItem] = useState<string>('');
@@ -50,7 +52,7 @@ const Select: FC<ISelect> = ({
       {
         (props) => (
           <div className={`${styles['contentInput']} ${className ?? ''}`} style={style}>
-            <label className={styles['description']}>{label}</label>
+            <label className={styles['description']}>{label}{isRequired ? <span style={{ color: 'red' }}>*</span> : null}</label>
             <label
               className={styles['labelInput']}
               style={styleSelect}>
@@ -81,7 +83,7 @@ const Select: FC<ISelect> = ({
                         onClick={() => { onAddItem && onAddItem(newItem); setNewItem(''); }}
                       >
                         Adicionar
-              </a>
+                      </a>
                     </div>
                   </div>
                 )}
