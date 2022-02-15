@@ -68,12 +68,12 @@ const ClientForm: FC<Props> = (props) => {
                                             <Select name='ageGroup' label='Grupo' options={convertEnumToOptionData(AgeGroupEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Field autoComplete='false' key='email' label='Email' name='email' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
-                                            <Field autoComplete='false' key='CPF' label='CPF' name='CPF' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <Field autoComplete='false' key='email' label='Email' name='email' style={{ width: '24%' }} className={styles['inputGroup']}></Field>
+                                            <Field autoComplete='false' key='CPF' label='CPF' name='CPF' style={{ width: '24%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='RG' label='RG' name='RG' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <Select name='serviceModality' label='Modalidade' options={convertEnumToOptionData(ServiceModalityEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                         </div>
-                                        <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '25%' }} placeholder='Informe TAGS para o cliente' />
+                                        <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '100%' }} placeholder='Informe TAGS para o cliente' />
                                         <TextArea rows={3} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextArea>
                                     </div>
                                 </TabPane>
@@ -109,9 +109,9 @@ const ClientForm: FC<Props> = (props) => {
                                             <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='state' label='Estado' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='country' label='País' placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select name='state' label='Estado' placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
                                             <Select name='city' label='Cidade' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
-                                            <Select name='country' label='País' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                         </div>
                                     </div>
                                 </TabPane>
