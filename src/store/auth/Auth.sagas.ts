@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { history } from '../';
 import { AuthApi } from '../../data/Auth.api';
+import { AccountApi } from '../../data/Account.api';
 import { AuthUtils } from '../../utils/AuthUtils';
 import { AuthActions, LoginAction, LoginSuccessAction, RegisterAction } from './Auth.actions';
 import { toast } from "react-toastify";
@@ -26,7 +27,7 @@ export function* login({ payload }: LoginAction) {
 
 export function* register({ payload }: RegisterAction) {
   try {
-    const { data } = yield call(AuthApi.register, payload);
+    const { data } = yield call(AccountApi.register, payload);
     yield put(AuthActions.registerSuccess(data.data));
 
     toast.success('Cadastro realizado com sucesso!');
@@ -45,7 +46,7 @@ export function* loginSuccess({ payload }: LoginSuccessAction) {
     refreshToken: payload.tokenResponse.refresh_token,
     expiresIn: payload.tokenResponse.expires_in,
   });
-  
+
   // yield put(AuthActions.getUserInfo()); #revisar
   window.location.href = "/";
 }
