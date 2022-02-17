@@ -7,6 +7,7 @@ import { IClientResponse } from '../../data/interfaces/client/IClient';
 import { history } from '../../store';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
 import { ClientActions } from '../../store/client/Client.actions';
+import { SystemActions } from '../../store/system/System.actions';
 import { getColumns } from './Clients.columns';
 import styles from './Clients.module.scss';
 import ClientForm from './modal/form'
@@ -15,7 +16,7 @@ const Clients: FC<Props> = (props) => {
     var dispatch = useDispatch();
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [formClientVisible, setFormClientVisible] = useState(false);
-    
+
     useEffect(() => {
         dispatch(ClientActions.list());
     }, [window.location.pathname]);

@@ -11,6 +11,6 @@ export class SystemApi {
 
     static async listCoutries(): Promise<AxiosResponse<ICountry[]>> {
         const axios = await Http.axios();
-        return axios.get('system/coutries');
+        return axios.get('system/countries');
     }
 }

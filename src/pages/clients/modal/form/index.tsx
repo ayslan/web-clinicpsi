@@ -127,6 +127,7 @@ const ClientForm: FC<Props> = (props) => {
 
 const mapState = (state: IGlobalReducerState) => ({
     ...state.client,
+    ...state.system
 });
 
 const connector = connect(

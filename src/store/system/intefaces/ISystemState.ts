@@ -4,5 +4,5 @@ import { IReducerStateBase } from "../../base/interface/IReducerStateBase";
 
 export interface ISystemState extends IReducerStateBase {
     cities: ICity[];
-    coutries: ICountry[];
+    countries: ICountry[];
 }

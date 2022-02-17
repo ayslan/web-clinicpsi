@@ -4,7 +4,7 @@ import { SystemActionKeys, SystemActionUnion } from "./System.actions";
 const initialState: ISystemState = {
     isLoading: false,
     cities: [],
-    coutries: []
+    countries: []
 };
 
 const systemReducer = (state = initialState, action: SystemActionUnion): ISystemState => {
@@ -24,7 +24,7 @@ const systemReducer = (state = initialState, action: SystemActionUnion): ISystem
             return {
                 ...state,
                 isLoading: false,
-                coutries: action.payload
+                countries: action.payload
             };
 
         case SystemActionKeys.DEFAULT_FAILED:

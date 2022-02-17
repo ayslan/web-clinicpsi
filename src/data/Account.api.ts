@@ -6,6 +6,6 @@ import { IRegisterRequest } from "./interfaces/auth/IRegister";
 export class AccountApi {
   static async register(body: IRegisterRequest): Promise<AxiosResponse<ILoginResponse>> {
     const axios = await Http.axios();
-    return axios.post('/account/register', body);
+    return axios.post('/account', body);
   }
 }
