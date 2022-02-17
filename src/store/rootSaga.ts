@@ -5,6 +5,8 @@ import { ClientActionKeys } from "./client/Client.actions";
 import { list as listClients, register as registerClient } from "./client/Client.sagas";
 import { ConfigActionKeys } from "./config/Config.actions";
 import { listInsurance } from "./config/Config.sagas";
+import { SystemActionKeys } from "./system/System.actions";
+import { listCities, listCoutries } from './system/System.sagas';
 
 export function* rootSaga() {
     yield all([
@@ -14,6 +16,9 @@ export function* rootSaga() {
 
         takeLatest(ClientActionKeys.CLIENT_LIST_REQUEST, listClients),
         takeLatest(ClientActionKeys.CLIENT_REGISTER_REQUEST, registerClient),
+
+        takeLatest(SystemActionKeys.CITIES_LIST_REQUEST, listCities),
+        takeLatest(SystemActionKeys.COUNTRIES_LIST_REQUEST, listCoutries),
 
         takeLatest(ConfigActionKeys.INSURANCE_LIST_REQUEST, listInsurance),
     ]);
