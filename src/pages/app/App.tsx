@@ -51,24 +51,24 @@ const App: FC<Props> = ({ isAuthenticated, cities, countries }) => {
         pauseOnHover
       />
       {
-        !isSystemDataLoaded ?
-          'carregando...'
-          :
-          (isAuthenticated ?
+        isAuthenticated ?
+          (!isSystemDataLoaded ?
+            'carregando...'
+            :
             <ShellHost>
               <Switch>
                 <Route path='/' exact component={Dashboard} />
                 <Route path='/clients' exact component={Clients} />
                 <Route path='/calendar' exact component={Calendar} />
               </Switch>
-            </ShellHost>
-            :
-            <Switch>
-              <Route path='/register' component={Register} />
-              <Route path='/login' component={Login} />
-              <Route path='/' exact component={Login} />
-            </Switch>
-          )}
+            </ShellHost>)
+          :
+          <Switch>
+            <Route path='/register' component={Register} />
+            <Route path='/login' component={Login} />
+            <Route path='/' exact component={Login} />
+          </Switch>
+      }
     </>
   );
 }
@@ -86,11 +86,3 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & IApp;
 
 export default connector(App);
-
-// const mapStateProps = (state: IGlobalReducerState) => {
-//   return {
-//     isAuthenticated: isAuthenticatedSelector(state)
-//   };
-// };
-
-// export default connect(mapStateProps)(App);

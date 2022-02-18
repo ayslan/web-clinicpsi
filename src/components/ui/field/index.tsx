@@ -21,6 +21,7 @@ export interface IField {
   defaultValue?: string;
   autoComplete?: 'true' | 'false';
   isRequired?: boolean;
+  hidden?: boolean
 }
 
 const hasError = (meta: any, disabled?: boolean) => (
@@ -31,14 +32,14 @@ const Field: FC<IField> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', placeholder = label, autoComplete,
   onFocus, onBlur, onInput, disabled, value, readonly,
-  onChange, isRequired
+  onChange, isRequired, hidden
 }) => {
 
   return (
     <FieldReact name={name} type={type} defaultValue={defaultValue} initialValue={value}>
       {
         (props) => (
-          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style}>
+          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style} hidden={hidden}>
             <label className={styles['description']}>{label}{isRequired ? <span style={{ color: 'red' }}>*</span> : null}</label>
             <label
               hidden={type === 'hidden'}

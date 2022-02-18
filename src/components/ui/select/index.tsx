@@ -19,10 +19,11 @@ export interface ISelect {
   placeholder?: string,
   showAddItem?: boolean,
   isRequired?: boolean,
+  hidden?: boolean,
 
   onFocus?: () => void;
   onBlur?: () => void;
-  onSelect?: (e: any) => void;
+  onSelect?: (e: any, option?: any) => void;
   onAddItem?: (e: any) => void;
 }
 
@@ -42,7 +43,7 @@ const hasError = (meta: any, disabled?: boolean) => (
 const Select: FC<ISelect> = ({
   label, style, styleSelect, className, name, defaultValue, autoComplete,
   onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem,
-  showAddItem, mode, isRequired
+  showAddItem, mode, isRequired, hidden
 }) => {
 
   const [newItem, setNewItem] = useState<string>('');
@@ -51,7 +52,7 @@ const Select: FC<ISelect> = ({
     <FieldReact name={name} defaultValue={defaultValue} initialValue={value}>
       {
         (props) => (
-          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style}>
+          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style} hidden={hidden}>
             <label className={styles['description']}>{label}{isRequired ? <span style={{ color: 'red' }}>*</span> : null}</label>
             <label
               className={styles['labelInput']}
@@ -71,7 +72,7 @@ const Select: FC<ISelect> = ({
                   )
                 }}
                 className={styles['select']}
-                onSelect={onSelect}
+                onSelect={(e, o) => onSelect && onSelect(e, o)}
                 dropdownRender={!showAddItem ? undefined : menu => (
                   <div>
                     {menu}
@@ -90,7 +91,7 @@ const Select: FC<ISelect> = ({
               >
                 {
                   options?.map(option => (
-                    <Option value={option.value} style={option.style} className={option.className}>{option.text}</Option>
+                    <Option value={option.value} style={option.style} className={option.className}>{option.text ?? option.value}</Option>
                   ))
                 }
 

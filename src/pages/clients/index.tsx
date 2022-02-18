@@ -57,7 +57,7 @@ const Clients: FC<Props> = (props) => {
 
 
 const mapState = (state: IGlobalReducerState) => ({
-    ...state.client
+    ...state.client,
 });
 
 const connector = connect(

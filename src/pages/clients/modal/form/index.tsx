@@ -9,7 +9,9 @@ import TextArea from "../../../../components/ui/textArea";
 import { AgeGroupEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../../data/interfaces/client/IClient";
 import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
 import { ClientActions } from "../../../../store/client/Client.actions";
+import { getStatesOptionsData } from "../../../../utils/dateHelper";
 import { convertEnumToOptionData } from "../../../../utils/enumHelper";
+import { getOptionsDataFromObject } from "../../../../utils/helpers";
 import styles from './ClientForm.module.scss';
 import schema from "./ClientForm.schema";
 const { TabPane } = Tabs;
@@ -24,6 +26,9 @@ const ClientForm: FC<Props> = (props) => {
     const dispatch = useDispatch();
     const [isSubmit, setIsSubmit] = useState(false);
     const [isSending, setIsSending] = useState(false);
+    const [countriesOptions] = useState(getOptionsDataFromObject(props.countries, 'countryId', 'name'));
+    const [stateSelected, setState] = useState<string>();
+    const [countrySelected, setCountry] = useState<string>();
 
     const register = (values: IClientResponse) => {
         if (values) {
@@ -38,6 +43,17 @@ const ClientForm: FC<Props> = (props) => {
         setIsSending(false);
         props.onClose();
     }
+
+    const getCitiesByState = () => {
+        if (stateSelected) {
+            var cities = props.cities.filter(x => x.state == stateSelected);
+            return getOptionsDataFromObject(cities, 'cityId', 'name');
+        }
+
+        return undefined;
+    }
+
+    console.log(countrySelected);
 
     var buttons =
         [
@@ -109,9 +125,11 @@ const ClientForm: FC<Props> = (props) => {
                                             <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='country' label='País' placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select name='state' label='Estado' placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select name='city' label='Cidade' placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='country' label='País' onSelect={(e, o) => setCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select hidden={countrySelected != undefined && countrySelected != 'Brasil'} name='state' label='Estado' onSelect={(e) => setState(e)} options={getStatesOptionsData()} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select hidden={countrySelected != undefined && countrySelected != 'Brasil'} name='city' label='Cidade' options={getCitiesByState()} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                     </div>
                                 </TabPane>
