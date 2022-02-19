@@ -20,6 +20,7 @@ export interface IClientForm {
     visible: boolean;
     onClose: () => void;
     isNewClient?: boolean;
+    clientId?: number;
 }
 
 const ClientForm: FC<Props> = (props) => {
@@ -27,14 +28,20 @@ const ClientForm: FC<Props> = (props) => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [countriesOptions] = useState(getOptionsDataFromObject(props.countries, 'countryId', 'name'));
-    const [stateSelected, setState] = useState<string>();
     const [countrySelected, setCountry] = useState<string>();
+    const [values, setValues] = useState({} as IClientResponse);
+    const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
 
     const register = (values: IClientResponse) => {
-        if (values) {
-            dispatch(ClientActions.register(values));
-            setIsSending(true);
-        }
+        console.log(values);
+
+
+        // if (values) {
+
+
+        //     dispatch(ClientActions.register(values));
+        //     setIsSending(true);
+        // }
 
         setIsSubmit(false);
     }
@@ -44,16 +51,38 @@ const ClientForm: FC<Props> = (props) => {
         props.onClose();
     }
 
-    const getCitiesByState = () => {
-        if (stateSelected) {
-            var cities = props.cities.filter(x => x.state == stateSelected);
+    const getCitiesByState = (state: string) => {
+        if (state) {
+            var cities = props.cities.filter(x => x.state == state);
             return getOptionsDataFromObject(cities, 'cityId', 'name');
         }
 
-        return undefined;
+        return [];
     }
 
-    console.log(countrySelected);
+    const changeCountry = (country: string) => {
+        setCountry(country);
+
+        // setDefaultValues(
+        //     {
+        //         ...defaultValues,
+        //         cityId: undefined
+        //     }
+        // );
+    }
+
+    const changeState = (state: string) => {
+
+        var cities = getCitiesByState(state);
+        setCityOptions(cities);
+
+        setValues({
+            ...values,
+            state: state,
+            cityId: parseInt(cities[0].value.toString())
+        });
+
+    }
 
     var buttons =
         [
@@ -63,19 +92,27 @@ const ClientForm: FC<Props> = (props) => {
         ];
 
     return <>
-        <Form onSubmit={register} schema={schema} isSubmited={isSubmit}>
-            <Modal className={styles['container']} title={props.isNewClient ? 'Novo Cliente' : 'Atualizar Cliente'} visible={props.visible} footer={buttons} closable={false} destroyOnClose={true} width={858}>
-                {props.isLoading ?
-                    <Skeleton active />
-                    :
-                    <>
-                        <div>
+        <Modal className={styles['container']} title={props.isNewClient ? 'Novo Cliente' : 'Atualizar Cliente'} visible={props.visible} footer={buttons} closable={false} destroyOnClose={true} width={858}>
+
+            {props.isLoading ?
+                <Skeleton active />
+                :
+                <>
+                    <div>
+                        <Form onSubmit={register} schema={schema} isSubmited={isSubmit} initialValues={values}>
                             <Tabs style={{ height: '520px' }}>
                                 <TabPane tab="Dados Pessoais" key="1">
                                     <div style={{ maxWidth: 850 }}>
                                         <div className={styles['groupField']}>
                                             <Field autoComplete='false' isRequired={true} key='name' label='Nome' name='name' style={{ width: '75%' }} className={styles['inputGroup']}></Field>
                                             <Field type={'date'} isRequired={true} autoComplete='false' key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                        </div>
+                                        <div className={styles['groupField']}>
+                                            <Select name='countryId' label='País' onSelect={(e, o) => changeCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select name='state' label='Estado' onSelect={changeState} options={getStatesOptionsData()} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select name='cityId' label='Cidade' options={cityOptions} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            {/* <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field> */}
                                         </div>
                                         <div className={styles['groupField']}>
                                             <Select name='gender' isRequired={true} label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
@@ -124,21 +161,15 @@ const ClientForm: FC<Props> = (props) => {
                                             <Field autoComplete='false' key='complement' label='Complemento' name='complement' style={{ width: '52%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
-                                        <div className={styles['groupField']}>
-                                            <Select name='country' label='País' onSelect={(e, o) => setCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select hidden={countrySelected != undefined && countrySelected != 'Brasil'} name='state' label='Estado' onSelect={(e) => setState(e)} options={getStatesOptionsData()} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select hidden={countrySelected != undefined && countrySelected != 'Brasil'} name='city' label='Cidade' options={getCitiesByState()} placeholder={'Selecione...'} style={{ width: '33%' }} className={styles['selectGroup']} />
-                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
-                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
-                                        </div>
+
                                     </div>
                                 </TabPane>
                             </Tabs>
-                        </div>
-                    </>
-                }
-            </Modal>
-        </Form>
+                        </Form>
+                    </div>
+                </>
+            }
+        </Modal>
     </>;
 }
 

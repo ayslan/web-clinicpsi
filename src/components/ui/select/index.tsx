@@ -5,26 +5,27 @@ import { Divider, Input, Select as SelectAnt } from 'antd';
 const { Option } = SelectAnt;
 
 export interface ISelect {
-  label?: string;
+  label?: string | React.ReactNode;
   name: string;
   style?: CSSProperties;
   styleSelect?: CSSProperties;
   className?: string;
   disabled?: boolean;
   value?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
   autoComplete?: 'true' | 'false';
   mode?: 'multiple' | 'tags';
   options?: IOptionData[],
   placeholder?: string,
   showAddItem?: boolean,
+  alloClear?: boolean,
   isRequired?: boolean,
   hidden?: boolean,
-
   onFocus?: () => void;
   onBlur?: () => void;
-  onSelect?: (e: any, option?: any) => void;
+  onSelect?: (e: any, o: any) => void;
   onAddItem?: (e: any) => void;
+  onClear?: () => void;
 }
 
 export interface IOptionData {
@@ -42,28 +43,38 @@ const hasError = (meta: any, disabled?: boolean) => (
 
 const Select: FC<ISelect> = ({
   label, style, styleSelect, className, name, defaultValue, autoComplete,
-  onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem,
-  showAddItem, mode, isRequired, hidden
+  onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem, showAddItem,
+  mode, alloClear, isRequired, onClear
 }) => {
 
   const [newItem, setNewItem] = useState<string>('');
+
+  if (isRequired && typeof (label) == 'string') {
+    label = <>{label} <span style={{ color: 'red' }}>*</span></>;
+  }
+
+  if (label == 'Cidade')
+    console.log(value, defaultValue);
 
   return (
     <FieldReact name={name} defaultValue={defaultValue} initialValue={value}>
       {
         (props) => (
-          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style} hidden={hidden}>
-            <label className={styles['description']}>{label}{isRequired ? <span style={{ color: 'red' }}>*</span> : null}</label>
+          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style}>
+            <label className={styles['description']}>{label}</label>
             <label
               className={styles['labelInput']}
               style={styleSelect}>
               <SelectAnt
                 {...props.input}
-                value={props.input.value?.length === 0 ? undefined : props.input.value}
+                value={props.input.value?.toString()?.length === 0 ? undefined : props.input.value}
                 showSearch
                 disabled={disabled}
                 placeholder={placeholder}
+                defaultValue={defaultValue}
                 mode={mode}
+                onClear={onClear}
+                allowClear={alloClear ?? true}
                 notFoundContent={<div style={{ color: "GrayText", textAlign: 'center' }}>Nenhum valor encontrado</div>}
                 filterOption={(input, option) => {
                   return (
@@ -72,7 +83,7 @@ const Select: FC<ISelect> = ({
                   )
                 }}
                 className={styles['select']}
-                onSelect={(e, o) => onSelect && onSelect(e, o)}
+                onSelect={onSelect}
                 dropdownRender={!showAddItem ? undefined : menu => (
                   <div>
                     {menu}
@@ -91,7 +102,7 @@ const Select: FC<ISelect> = ({
               >
                 {
                   options?.map(option => (
-                    <Option value={option.value} style={option.style} className={option.className}>{option.text ?? option.value}</Option>
+                    <Option value={option.value} style={option.style} className={option.className}>{option.text}</Option>
                   ))
                 }
 

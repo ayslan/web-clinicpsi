@@ -62,6 +62,7 @@ const Form: FC<IForm> = ({
             <FormReact
                 onSubmit={(values) => onSubmit(values)}
                 initialValues={initialValues}
+                keepDirtyOnReinitialize={true}
                 mutators={{
                     ...arrayMutators,
                     ...mutators,

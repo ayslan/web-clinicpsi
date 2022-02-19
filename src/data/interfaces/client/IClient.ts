@@ -24,13 +24,15 @@ export interface IClientResponse {
     //Address
     zip: string,
     streetAddress: string,
-    number: number,
+    number?: number,
     complement: string,
     district: string,
-    city: number,
-    state: number,
-    country: number,
-
+    cityId?: number,
+    state: string,
+    countryId?: number,
+    foreignStateName: string,
+    foreignCityName: string,
+    
     //Payment
     insuranceFk: number,
     servicePrice: number,
