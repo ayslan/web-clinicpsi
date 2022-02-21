@@ -7,6 +7,7 @@ import Form from "../../../../components/ui/form";
 import Select, { IOptionData } from "../../../../components/ui/select";
 import TextArea from "../../../../components/ui/textArea";
 import { AgeGroupEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../../data/interfaces/client/IClient";
+import { ICity } from "../../../../data/interfaces/system/ICity";
 import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
 import { ClientActions } from "../../../../store/client/Client.actions";
 import { getStatesOptionsData } from "../../../../utils/dateHelper";
@@ -63,16 +64,16 @@ const ClientForm: FC<Props> = (props) => {
     const changeCountry = (country: string) => {
         setCountry(country);
 
-        // setDefaultValues(
-        //     {
-        //         ...defaultValues,
-        //         cityId: undefined
-        //     }
-        // );
+        setValues(
+            {
+                ...values,
+                state: undefined,
+                cityId: undefined
+            }
+        );
     }
 
     const changeState = (state: string) => {
-
         var cities = getCitiesByState(state);
         setCityOptions(cities);
 
@@ -82,6 +83,13 @@ const ClientForm: FC<Props> = (props) => {
             cityId: parseInt(cities[0].value.toString())
         });
 
+    }
+
+    const changeCity = (cityId: number) => {
+        setValues({
+            ...values,
+            cityId: cityId
+        });
     }
 
     var buttons =
@@ -110,7 +118,7 @@ const ClientForm: FC<Props> = (props) => {
                                         <div className={styles['groupField']}>
                                             <Select name='countryId' label='País' onSelect={(e, o) => changeCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
                                             <Select name='state' label='Estado' onSelect={changeState} options={getStatesOptionsData()} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select name='cityId' label='Cidade' options={cityOptions} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Select name='cityId' label='Cidade' onSelect={changeCity} options={cityOptions} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                             {/* <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                             <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field> */}
                                         </div>

@@ -28,7 +28,7 @@ export interface IClientResponse {
     complement: string,
     district: string,
     cityId?: number,
-    state: string,
+    state?: string,
     countryId?: number,
     foreignStateName: string,
     foreignCityName: string,
