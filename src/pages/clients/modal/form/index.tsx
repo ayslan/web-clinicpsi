@@ -32,6 +32,7 @@ const ClientForm: FC<Props> = (props) => {
     const [countrySelected, setCountry] = useState<string>();
     const [values, setValues] = useState({} as IClientResponse);
     const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
+    const [isForeignCountry, setIsForeignCountry] = useState(false);
 
     const register = (values: IClientResponse) => {
         console.log(values);
@@ -63,6 +64,7 @@ const ClientForm: FC<Props> = (props) => {
 
     const changeCountry = (country: string) => {
         setCountry(country);
+        setIsForeignCountry(country != 'Brasil');
 
         setValues(
             {
@@ -116,13 +118,6 @@ const ClientForm: FC<Props> = (props) => {
                                             <Field type={'date'} isRequired={true} autoComplete='false' key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='countryId' label='País' onSelect={(e, o) => changeCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select name='state' label='Estado' onSelect={changeState} options={getStatesOptionsData()} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                            <Select name='cityId' label='Cidade' onSelect={changeCity} options={cityOptions} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '33%' }} className={styles['selectGroup']} />
-                                            {/* <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
-                                            <Field hidden={countrySelected == undefined || countrySelected == 'Brasil'} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field> */}
-                                        </div>
-                                        <div className={styles['groupField']}>
                                             <Select name='gender' isRequired={true} label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                             <Select name='status' isRequired={true} label='Status' options={convertEnumToOptionData(ClientStatusEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                             <Field autoComplete='false' key='phone' label='Telefone' isRequired={true} name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
@@ -163,13 +158,20 @@ const ClientForm: FC<Props> = (props) => {
                                         <div className={styles['groupField']}>
                                             <Field autoComplete='false' key='zip' label='CEP' name='zip' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='streetAddress' label='Logradouro' name='streetAddress' style={{ width: '66%' }} className={styles['inputGroup']}></Field>
+
                                         </div>
                                         <div className={styles['groupField']}>
                                             <Field autoComplete='false' key='number' label='Número' name='number' style={{ width: '15%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='complement' label='Complemento' name='complement' style={{ width: '52%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         </div>
-
+                                        <div className={styles['groupField']}>
+                                            <Select name='countryId' label='País' onSelect={(e, o) => changeCountry(o.children)} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select hidden={isForeignCountry} name='state' label='Estado' onSelect={changeState} options={getStatesOptionsData()} disabled={!countrySelected} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                            <Select hidden={isForeignCountry} name='cityId' label='Cidade' onSelect={changeCity} options={cityOptions} disabled={!values.state} placeholder={values.state ? 'Selecione...' : 'Selecione um estado...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                            <Field hidden={!isForeignCountry} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                            <Field hidden={!isForeignCountry} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                        </div>
                                     </div>
                                 </TabPane>
                             </Tabs>

@@ -44,7 +44,7 @@ const hasError = (meta: any, disabled?: boolean) => (
 const Select: FC<ISelect> = ({
   label, style, styleSelect, className, name, defaultValue, autoComplete,
   onFocus, onBlur, disabled, value, options, onSelect, placeholder, onAddItem, showAddItem,
-  mode, alloClear, isRequired, onClear
+  mode, alloClear, isRequired, onClear, hidden
 }) => {
 
   const [newItem, setNewItem] = useState<string>('');
@@ -60,7 +60,7 @@ const Select: FC<ISelect> = ({
     <FieldReact name={name} defaultValue={defaultValue} initialValue={value}>
       {
         (props) => (
-          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style}>
+          <div className={`${styles['contentInput']} ${className ?? ''}`} style={style} hidden={hidden}>
             <label className={styles['description']}>{label}</label>
             <label
               className={styles['labelInput']}
