@@ -1,7 +1,9 @@
 import { Button, Divider, Modal, Skeleton, Tabs, } from "antd";
+import moment from "moment";
 import { useEffect } from "preact/hooks";
 import React, { FC, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
+import DatePicker from "../../../../components/ui/datePicker";
 import Field from "../../../../components/ui/field";
 import FieldNumber from "../../../../components/ui/fieldNumber";
 import Form from "../../../../components/ui/form";
@@ -11,7 +13,7 @@ import { AgeGroupEnum, ChargeTypeEnum, ClientStatusEnum, EducationLevelEnum, Gen
 import { ICity } from "../../../../data/interfaces/system/ICity";
 import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
 import { ClientActions } from "../../../../store/client/Client.actions";
-import { getStatesOptionsData } from "../../../../utils/dateHelper";
+import { DATE_FORMAT, getStatesOptionsData } from "../../../../utils/dateHelper";
 import { convertEnumToOptionData } from "../../../../utils/enumHelper";
 import { getOptionsDataFromObject } from "../../../../utils/helpers";
 import styles from './ClientForm.module.scss';
@@ -31,13 +33,12 @@ const ClientForm: FC<Props> = (props) => {
     const [isSending, setIsSending] = useState(false);
     const [countriesOptions] = useState(getOptionsDataFromObject(props.countries, 'countryId', 'name'));
     const [countrySelected, setCountry] = useState<string | undefined>('Brasil');
-    const [values, setValues] = useState({ countryId: 32, observation:'teate sdafasfd\nafsdf' } as IClientResponse);
+    const [values, setValues] = useState({ countryId: 32, status: ClientStatusEnum.Ativo } as IClientResponse);
     const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
     const [isForeignCountry, setIsForeignCountry] = useState(false);
 
     const register = (values: IClientResponse) => {
         console.log(values);
-
 
         // if (values) {
 
@@ -163,7 +164,7 @@ const ClientForm: FC<Props> = (props) => {
                                             <Select name='gender' label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                             <Field autoComplete='false' key='phone' label='Telefone' name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='email' label='Email' name='email' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
-                                            <Field type={'date'} autoComplete='false' key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '22%' }} className={styles['inputGroup']}></Field>
+                                            <DatePicker defaultValue={values?.birthDate} onChange={(e) => setValues({ ...values, birthDate: e })} key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '22%' }} className={styles['inputGroup']} />
                                         </div>
                                         <div style={{ maxWidth: 850 }}>
                                             <div className={styles['groupField']}>
@@ -171,7 +172,7 @@ const ClientForm: FC<Props> = (props) => {
                                                 <FieldNumber precision={2} hidden={values?.chargeType && values?.chargeType == ChargeTypeEnum.Gratuito} disabled={!values?.chargeType} autoComplete='false' key='servicePrice' label={values?.chargeType != ChargeTypeEnum.Pacote ? 'Valor da Consulta' : 'Valor Padrão da Consulta'} placeholder={values?.chargeType == ChargeTypeEnum.Gratuito ? '0,00' : 'Valor da Consulta'} name='servicePrice' style={{ width: '25%' }} className={styles['inputGroup']} />
                                                 <FieldNumber precision={0} hidden={values?.chargeType != ChargeTypeEnum.Pacote} autoComplete='false' key='qtyPackageServices' label='Qtde. de Sessões do Pacote' name='qtyPackageServices' style={{ width: '25%' }} className={styles['inputGroup']} />
                                                 <FieldNumber precision={2} hidden={values?.chargeType != ChargeTypeEnum.Pacote} autoComplete='false' key='servicePackagePrice' label='Valor do Pacote' name='servicePackagePrice' style={{ width: '22%' }} className={styles['inputGroup']} />
-                                                <FieldNumber hidden={values?.chargeType != ChargeTypeEnum.Gratuito} disabled={true} autoComplete='false' key='servicePriceFree' label={'Valor da Consulta'} placeholder={'0,00'} name='servicePriceFree' style={{ width: '25%' }} className={styles['inputGroup']} />
+                                                <FieldNumber hidden={values?.chargeType != ChargeTypeEnum.Gratuito} disabled={true} autoComplete='false' key='servicePriceFree' label={'Valor da Consulta'} placeholder={'0,00'} name='servicePriceFree' style={{ width: '22%' }} className={styles['inputGroup']} />
                                             </div>
                                         </div>
                                         <TextAreaForm rows={3} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextAreaForm>

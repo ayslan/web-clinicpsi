@@ -1,8 +1,10 @@
 import { format } from 'date-fns';
 import { IOptionData } from '../components/ui/select';
 
-export const datetimeToString = (date: Date, strFormat: string): string => {
-    return format(date, strFormat);
+export const DATE_FORMAT = 'DD/MM/YYYY';
+
+export const datetimeToString = (date: Date, strFormat?: string): string => {
+    return format(date, strFormat ?? 'dd/MM/yyyy');
 };
 
 export const dateStringUStoPTBR = (date: any): string => {

@@ -1,0 +1,30 @@
+.contentInput {
+    font-family: "Nunito", sans-serif;
+    color: #354558;
+
+    .description {
+        display: table;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+    .labelInput {
+        position: relative;
+        top: 5px;
+
+        [class$="ant-picker"],
+        [class$="ant-picker-focused"],
+        [class$="ant-picker-disabled"] {
+            width: 100% !important;
+        }
+    }
+
+    .errorInput {
+        font-size: 11px;
+        color: #ff0000ba;
+        margin-top: 3px;
+        margin-left: 1px;
+        font-weight: 100;
+        font-family: sans-serif;
+    }
+}
