@@ -32,12 +32,12 @@ export interface IClientResponse {
     countryId?: number,
     foreignStateName: string,
     foreignCityName: string,
-    
+
     //Payment
-    insuranceFk: number,
-    servicePrice: number,
-    insuranceTransferType: CalculationTypeEnum,
-    insuranceTransferValue: number,
+    chargeType?: ChargeTypeEnum,
+    servicePrice?: number,
+    qtyPackageServices?: number,
+    servicePackagePrice?: number,
 
     //Emergency contact
     emergencyContact: string,
@@ -87,10 +87,17 @@ export enum AgeGroupEnum {
 
 export enum GenderEnum {
     'Masculino' = 1, //Male
-    'Feminino' = 2 //Female
+    'Feminino' = 2, //Female
+    'Outro' = 3
 }
 
 export enum CalculationTypeEnum {
     'Porcentagem' = 1, //Percentage
     'Valor' = 2 //Value
+}
+
+export enum ChargeTypeEnum {
+    'Sessão' = 1,
+    'Pacote' = 2,
+    'Gratuito' = 3
 }

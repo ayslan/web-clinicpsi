@@ -1,8 +1,7 @@
 import React, { FC, CSSProperties } from 'react';
-
-import styles from './Field.module.scss';
+import styles from './FieldNumber.module.scss';
 import { Field as FieldReact } from 'react-final-form';
-import { Input } from 'antd';
+import { InputNumber } from 'antd';
 
 export interface IField {
   label?: string;
@@ -22,18 +21,22 @@ export interface IField {
   defaultValue?: string;
   autoComplete?: 'true' | 'false';
   isRequired?: boolean;
-  hidden?: boolean
+  hidden?: boolean,
+  min?: string,
+  max?: string,
+  step?: string,
+  precision?: number
 }
 
 const hasError = (meta: any, disabled?: boolean) => (
   !disabled && meta.invalid && meta.touched
 );
 
-const Field: FC<IField> = ({
+const FieldNumber: FC<IField> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', placeholder = label, autoComplete,
   onFocus, onBlur, onInput, disabled, value, readonly,
-  onChange, isRequired, hidden
+  onChange, isRequired, hidden, min, max, step, precision
 }) => {
 
   return (
@@ -45,12 +48,18 @@ const Field: FC<IField> = ({
             <label
               hidden={type === 'hidden'}
               className={styles['labelInput']}>
-              <Input
+              <InputNumber<string>
                 {...props.input}
                 disabled={disabled}
                 placeholder={placeholder}
                 readOnly={readonly}
                 style={styleInput}
+                min={min}
+                max={max}
+                precision={precision}
+                step={step}
+                decimalSeparator=','
+                controls={false}
                 className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''}`}
                 onInput={(e: any) => onInput && onInput(e.target.value)}
                 onChangeCapture={onChange}
@@ -67,4 +76,4 @@ const Field: FC<IField> = ({
   );
 };
 
-export default Field;
+export default FieldNumber;

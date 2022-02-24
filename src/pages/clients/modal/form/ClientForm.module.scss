@@ -1,6 +1,10 @@
 .container {
+    @media (max-height: 760px) {
+        top: 40px !important;
+    }
+
     [class*="ant-modal-body"] {
-        height: 520px !important;
+        height: 570px !important;
     }
 
     .groupField {

@@ -4,7 +4,6 @@ import styles from './LeftBar.module.scss';
 import { Menu } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { Link } from 'react-router-dom';
-
 import {
     AppstoreOutlined,
     PieChartOutlined,
@@ -33,8 +32,6 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
 
     var defaultOpenKeys: string[] = [];
     var defaultSelectedKeys: string[] = [];
-
-    var pathName = window.location.pathname;
 
     // if (pathName.split('/').length == 2) {
     //     defaultOpenKeys = [];
@@ -75,8 +72,6 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 theme='dark'
                 inlineCollapsed={isCollapsed}
                 style={{ height: '100%', backgroundColor: '#313a46' }}
-                openKeys={openKeys}
-                onOpenChange={onOpenChange}
                 onClick={onChange}
             >
                 <Menu.Item key='/' icon={<DashboardOutlined className={styles['icon']} />} title='Dashboard'>
@@ -99,48 +94,13 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                     Usuários
                     <Link to='/users' />
                 </Menu.Item>
-                <Menu.Item key='/settings' icon={<SettingOutlined className={styles['icon']} />}>
-                    Configurações
-                    <Link to='/settings' />
-                </Menu.Item>
+                <SubMenu key="/settings" icon={<SettingOutlined className={styles['icon']} />} title="Configurações">
+                    <Menu.Item key="3">Usuários<Link to='/settings/users' /></Menu.Item>
+                    <Menu.Item key="4">Cobrança<Link to='/settings/billing' /></Menu.Item>
+                </SubMenu>
                 <Menu.Item key='/logout' icon={<LogoutOutlined className={styles['icon']} />} onClick={onLogout}>
                     Sair
                 </Menu.Item>
-                {/* <SubMenu key='/clientes' icon={<FormOutlined />} title='Clientes'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Clientes</Menu.Item>
-                    <Menu.Item key='/pedidos/importador'>Cadastrar <Link to='/pedidos/importador' /></Menu.Item>
-                </SubMenu> */}
-                {/* <SubMenu key='/pedidoItens' icon={<AppstoreOutlined />} title='Itens do Pedido'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Itens do Pedido</Menu.Item>
-                    <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/pedidoItens/atualizar'>Atualizar <Link to='/pedidoItens/atualizar' /></Menu.Item>
-                    <Menu.Item key='/pedidoItens/atualizarItens'>Lista de Itens Atualizados <Link to='/pedidoItens/atualizarItens' /></Menu.Item>
-                </SubMenu>
-                <SubMenu style={{ ...setVisibleAccessAdmin }} key='/produtos' icon={<HddOutlined />} title='Produtos'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Produtos</Menu.Item>
-                    <Menu.Item key='/produtos/atualizar'>Atualizar <Link to='/produtos/atualizar' /></Menu.Item>
-                </SubMenu>
-                <SubMenu style={{ ...setVisibleAccessAdmin }} key='/clientes' icon={<SmileOutlined />} title='Clientes'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Clientes</Menu.Item>
-                    <Menu.Item key='/clientes'>Clientes/Indústrias <Link to='/clientes' /></Menu.Item>
-                    <Menu.Item key='/clientes/categorias'>Categorias <Link to='/clientes/categorias' /></Menu.Item>
-                </SubMenu>
-                <Menu.Item style={{ ...setVisibleAccessAdmin }} key='/projecaoVenda' icon={<RiseOutlined />}>
-                    Projeção de Venda
-                </Menu.Item>
-                <SubMenu key='/dashboards' icon={<PieChartOutlined />} title='Dashboards'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>Dashboards</Menu.Item>
-                    <Menu.Item key='/dashboards/vendas'>Vendas <Link to='/dashboards/vendas' /></Menu.Item>
-                    <Menu.Item key='/dashboards/comparativo'>Comparativo <Link to='/dashboards/comparativo' /></Menu.Item>
-                    <Menu.Item key='/dashboards/projecao'>Projeção <Link to='/dashboards/projecao' /></Menu.Item>
-                    <Menu.Item key='/dashboards/diassemcomprar'>Dias sem Comprar <Link to='/dashboards/diassemcomprar' /></Menu.Item>
-                </SubMenu>
-                <SubMenu style={{ ...setVisibleAccessAdmin }} key='/api' icon={<LaptopOutlined />} title='API'>
-                    <Menu.Item hidden={!isCollapsed} className={styles['parentMenuCollapsed']}>API</Menu.Item>
-                    <Menu.Item key='/api/campos-api'>Campos API <Link to='/api/campos-api' /></Menu.Item>
-                    <Menu.Item key='/api/campos-integracao'>Campos Integração <Link to='/api/campos-integracao' /></Menu.Item>
-                </SubMenu>
-                */}
-
             </Menu>
         </div >
     );
