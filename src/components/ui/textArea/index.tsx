@@ -2,6 +2,8 @@ import React, { FC, CSSProperties } from 'react';
 
 import styles from './TextArea.module.scss';
 import { Field as FieldReact } from 'react-final-form';
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 export interface IField {
   label?: string;
@@ -27,7 +29,7 @@ const hasError = (meta: any, disabled?: boolean) => (
   !disabled && meta.invalid && meta.touched
 );
 
-const TextArea: FC<IField> = ({
+const TextAreaForm: FC<IField> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', placeholder = label, autoComplete,
   onFocus, onBlur, onInput, disabled, value, readonly, rows,
@@ -42,7 +44,7 @@ const TextArea: FC<IField> = ({
             <label className={styles['description']}>{label}</label>
             <label
               className={styles['labelInput']}>
-              <textarea
+              <TextArea
                 {...props.input}
                 disabled={disabled}
                 placeholder={placeholder}
@@ -65,4 +67,4 @@ const TextArea: FC<IField> = ({
   );
 };
 
-export default TextArea;
+export default TextAreaForm;

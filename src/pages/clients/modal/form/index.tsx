@@ -6,7 +6,7 @@ import Field from "../../../../components/ui/field";
 import FieldNumber from "../../../../components/ui/fieldNumber";
 import Form from "../../../../components/ui/form";
 import Select, { IOptionData } from "../../../../components/ui/select";
-import TextArea from "../../../../components/ui/textArea";
+import TextAreaForm from "../../../../components/ui/textArea";
 import { AgeGroupEnum, ChargeTypeEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../../data/interfaces/client/IClient";
 import { ICity } from "../../../../data/interfaces/system/ICity";
 import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
@@ -31,7 +31,7 @@ const ClientForm: FC<Props> = (props) => {
     const [isSending, setIsSending] = useState(false);
     const [countriesOptions] = useState(getOptionsDataFromObject(props.countries, 'countryId', 'name'));
     const [countrySelected, setCountry] = useState<string | undefined>('Brasil');
-    const [values, setValues] = useState({ countryId: 32 } as IClientResponse);
+    const [values, setValues] = useState({ countryId: 32, observation:'teate sdafasfd\nafsdf' } as IClientResponse);
     const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
     const [isForeignCountry, setIsForeignCountry] = useState(false);
 
@@ -151,7 +151,7 @@ const ClientForm: FC<Props> = (props) => {
                 <>
                     <div>
                         <Form onSubmit={register} schema={schema} isSubmited={isSubmit} initialValues={values}>
-                            <Tabs style={{ height: '520px' }}>
+                            <Tabs style={{ height: '390px' }}>
                                 <TabPane tab="Dados Pessoais" key="1">
                                     <div style={{ maxWidth: 850 }}>
                                         <div className={styles['groupField']}>
@@ -174,7 +174,7 @@ const ClientForm: FC<Props> = (props) => {
                                                 <FieldNumber hidden={values?.chargeType != ChargeTypeEnum.Gratuito} disabled={true} autoComplete='false' key='servicePriceFree' label={'Valor da Consulta'} placeholder={'0,00'} name='servicePriceFree' style={{ width: '25%' }} className={styles['inputGroup']} />
                                             </div>
                                         </div>
-                                        <TextArea rows={3} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextArea>
+                                        <TextAreaForm rows={3} autoComplete='false' key='observation' label='Obeservação' name='observation' className={styles['inputForm']}></TextAreaForm>
                                     </div>
                                 </TabPane>
                                 <TabPane tab="Dados Complementares" key="3">
