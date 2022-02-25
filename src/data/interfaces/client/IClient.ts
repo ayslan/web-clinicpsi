@@ -9,7 +9,7 @@ export interface IClientResponse {
     observation: string,
     code: string,
     RG: string,
-    birthDate: moment.Moment,
+    birthDate?: Date,
     maritalStatus: MaritalStatusEnum,
     status: ClientStatusEnum,
     serviceModality: ServiceModalityEnum,

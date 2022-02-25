@@ -8,6 +8,9 @@ export enum ClientActionKeys {
   CLIENT_REGISTER_REQUEST = 'CLIENT_REGISTER_REQUEST',
   CLIENT_REGISTER_SUCCESS = 'CLIENT_REGISTER_SUCCESS',
 
+  CLIENT_UPDATE_REQUEST = 'CLIENT_UPDATE_REQUEST',
+  CLIENT_UPDATE_SUCCESS = 'CLIENT_UPDATE_SUCCESS',
+
   DEFAULT_FAILED = 'DEFAULT_FAILED',
 }
 
@@ -17,6 +20,9 @@ export const ClientActions = {
 
   register: (request: IClientResponse): RegisterAction => createAction(ClientActionKeys.CLIENT_REGISTER_REQUEST, request),
   registerSuccess: (response: IClientResponse): RegisterSuccessAction => createAction(ClientActionKeys.CLIENT_REGISTER_SUCCESS, response),
+
+  update: (request: IClientResponse): UpdateAction => createAction(ClientActionKeys.CLIENT_UPDATE_REQUEST, request),
+  updateSuccess: (response: IClientResponse): UpdateSuccessAction => createAction(ClientActionKeys.CLIENT_UPDATE_SUCCESS, response),
 
   defaultFailure: (err: string): DefaultFailureAction => createAction(ClientActionKeys.DEFAULT_FAILED, err),
 }
@@ -28,5 +34,8 @@ export type ListSuccessAction = Action<ClientActionKeys.CLIENT_LIST_SUCCESS, ICl
 
 export type RegisterAction = Action<ClientActionKeys.CLIENT_REGISTER_REQUEST, IClientResponse>;
 export type RegisterSuccessAction = Action<ClientActionKeys.CLIENT_REGISTER_SUCCESS, IClientResponse>;
+
+export type UpdateAction = Action<ClientActionKeys.CLIENT_UPDATE_REQUEST, IClientResponse>;
+export type UpdateSuccessAction = Action<ClientActionKeys.CLIENT_UPDATE_SUCCESS, IClientResponse>;
 
 export type DefaultFailureAction = Action<ClientActionKeys.DEFAULT_FAILED, string>;

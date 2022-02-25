@@ -16,6 +16,7 @@ const Clients: FC<Props> = (props) => {
     var dispatch = useDispatch();
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const [formClientVisible, setFormClientVisible] = useState(false);
+    const [clientForm, setClientForm] = useState({} as IClientResponse);
 
     useEffect(() => {
         dispatch(ClientActions.list());
@@ -28,6 +29,16 @@ const Clients: FC<Props> = (props) => {
         }
     };
 
+    const onEdit = (client: IClientResponse) => {
+        setClientForm(client);
+        setFormClientVisible(true);
+    }
+
+    const onCreate = () => {
+        setClientForm({} as IClientResponse);
+        setFormClientVisible(true);
+    }
+
     return <>
         <PageContent title='Clientes' className={styles['container']}>
             {props.isLoading ?
@@ -35,23 +46,23 @@ const Clients: FC<Props> = (props) => {
                 :
                 <>
                     <div className={styles['toolBar']}>
-                        <Button type='primary' onClick={() => setFormClientVisible(true)}>Novo Cliente</Button>
-                        <Button type='default' >Importar Clientes</Button>
-                        <Button className='btn-green' type='primary'>Exportar Excel</Button>
+                        <Button type='primary' onClick={onCreate}>Novo Cliente</Button>
                     </div>
                     <div className={styles['qtdeRows']}>
                         {props.clients.length} registros
                     </div>
                     <Table
                         rowSelection={{ type: 'checkbox', ...rowSelection }}
-                        columns={getColumns(props.clients)}
+                        columns={getColumns(props.clients, onEdit)}
                         dataSource={props.clients.map((data) => ({ ...data, key: data.clientId }))}
                         style={{ overflowY: 'auto' }}
                         pagination={{ pageSize: 100, position: ['bottomRight'], showSizeChanger: false }} />
                 </>
             }
         </PageContent>
-        <ClientForm visible={formClientVisible} isNewClient={true} onClose={() => setFormClientVisible(false)} ></ClientForm>
+        {formClientVisible ?
+            <ClientForm visible={formClientVisible} client={clientForm} onClose={() => setFormClientVisible(false)} ></ClientForm>
+            : null}
     </>;
 }
 

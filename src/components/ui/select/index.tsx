@@ -53,9 +53,6 @@ const Select: FC<ISelect> = ({
     label = <>{label} <span style={{ color: 'red' }}>*</span></>;
   }
 
-  if (label == 'Cidade')
-    console.log(value, defaultValue);
-
   return (
     <FieldReact name={name} defaultValue={defaultValue} initialValue={value}>
       {

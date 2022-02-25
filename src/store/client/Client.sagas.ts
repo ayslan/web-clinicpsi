@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import { history } from '../';
 import { toast } from "react-toastify";
 import { ClientApi } from '../../data/Client.api';
-import { ClientActions, RegisterAction } from './Client.actions';
+import { ClientActions, RegisterAction, UpdateAction } from './Client.actions';
 
 export function* list() {
   try {
@@ -20,9 +20,20 @@ export function* register({ payload }: RegisterAction) {
     const { data } = yield call(ClientApi.register, payload);
     yield put(ClientActions.registerSuccess(data.data));
     toast.success('Cliente cadastrado com sucesso!');
-    history.push('/clients');
   } catch (e) {
     const error = e.errors && e.errors.length ? e.errors[0].Message : 'Erro ao cadastrar cliente';
+    toast.error(error);
+    yield put(ClientActions.defaultFailure(error));
+  }
+}
+
+export function* update({ payload }: UpdateAction) {
+  try {
+    const { data } = yield call(ClientApi.update, payload);
+    yield put(ClientActions.updateSuccess(data.data));
+    toast.success('Cliente atualizado com sucesso!');
+  } catch (e) {
+    const error = e.errors && e.errors.length ? e.errors[0].Message : 'Erro ao atualizar cliente';
     toast.error(error);
     yield put(ClientActions.defaultFailure(error));
   }

@@ -26,6 +26,20 @@ const clientReducer = (state = initialState, action: ClientActionUnion): IClient
                 clients: [...state.clients, action.payload]
             };
 
+        case ClientActionKeys.CLIENT_UPDATE_REQUEST:
+            return { ...state, isLoading: true };
+        case ClientActionKeys.CLIENT_UPDATE_SUCCESS:
+
+            var registros = [...state.clients];
+            var index = registros.findIndex(x => x.clientId == action.payload.clientId);
+            registros.splice(index, 1, action.payload);
+
+            return {
+                ...state,
+                isLoading: false,
+                clients: registros
+            };
+
         case ClientActionKeys.DEFAULT_FAILED:
             return {
                 ...state,

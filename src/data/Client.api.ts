@@ -12,4 +12,9 @@ export class ClientApi {
     const axios = await Http.axios();
     return axios.post('/clients', body);
   }
+
+  static async update(body: IClientResponse): Promise<AxiosResponse<IClientResponse>> {
+    const axios = await Http.axios();
+    return axios.put(`/clients/${body.clientId}`, body);
+  }
 }

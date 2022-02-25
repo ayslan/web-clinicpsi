@@ -1,6 +1,5 @@
 import { Button, Divider, Modal, Skeleton, Tabs, } from "antd";
 import moment from "moment";
-import { useEffect } from "preact/hooks";
 import React, { FC, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import DatePicker from "../../../../components/ui/datePicker";
@@ -10,10 +9,9 @@ import Form from "../../../../components/ui/form";
 import Select, { IOptionData } from "../../../../components/ui/select";
 import TextAreaForm from "../../../../components/ui/textArea";
 import { AgeGroupEnum, ChargeTypeEnum, ClientStatusEnum, EducationLevelEnum, GenderEnum, IClientResponse, MaritalStatusEnum, ServiceModalityEnum } from "../../../../data/interfaces/client/IClient";
-import { ICity } from "../../../../data/interfaces/system/ICity";
 import { IGlobalReducerState } from "../../../../store/base/interface/IGlobalReducerState";
 import { ClientActions } from "../../../../store/client/Client.actions";
-import { DATE_FORMAT, getStatesOptionsData } from "../../../../utils/dateHelper";
+import { getStatesOptionsData } from "../../../../utils/dateHelper";
 import { convertEnumToOptionData } from "../../../../utils/enumHelper";
 import { getOptionsDataFromObject } from "../../../../utils/helpers";
 import styles from './ClientForm.module.scss';
@@ -23,8 +21,7 @@ const { TabPane } = Tabs;
 export interface IClientForm {
     visible: boolean;
     onClose: () => void;
-    isNewClient?: boolean;
-    clientId?: number;
+    client: IClientResponse;
 }
 
 const ClientForm: FC<Props> = (props) => {
@@ -33,19 +30,16 @@ const ClientForm: FC<Props> = (props) => {
     const [isSending, setIsSending] = useState(false);
     const [countriesOptions] = useState(getOptionsDataFromObject(props.countries, 'countryId', 'name'));
     const [countrySelected, setCountry] = useState<string | undefined>('Brasil');
-    const [values, setValues] = useState({ countryId: 32, status: ClientStatusEnum.Ativo } as IClientResponse);
     const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
     const [isForeignCountry, setIsForeignCountry] = useState(false);
+    const [isNewRegister] = useState<boolean>((props.client?.clientId ?? 0) == 0);
+    const [values, setValues] = useState(isNewRegister ? { countryId: 32, status: ClientStatusEnum.Ativo } as IClientResponse : props.client);
 
     const register = (values: IClientResponse) => {
-        console.log(values);
-
-        // if (values) {
-
-
-        //     dispatch(ClientActions.register(values));
-        //     setIsSending(true);
-        // }
+        if (values) {
+            values.clientId > 0 ? dispatch(ClientActions.update(values)) : dispatch(ClientActions.register(values));
+            setIsSending(true);
+        }
 
         setIsSubmit(false);
     }
@@ -128,10 +122,6 @@ const ClientForm: FC<Props> = (props) => {
         setValues({ ...values, chargeType: chargeType, servicePrice: undefined })
     }
 
-    const changeServicePrice = (servicePrice?: number) => {
-        setValues({ ...values, servicePrice: servicePrice });
-    }
-
     if (!props.isLoading && isSending) {
         setIsSending(false);
         onClose();
@@ -140,12 +130,12 @@ const ClientForm: FC<Props> = (props) => {
     var buttons =
         [
             <Button onClick={onClose} type='link'>Cancelar</Button>,
-            <Button type='primary' htmlType='submit' onClick={() => setIsSubmit(true)} >Cadastrar</Button>,
-            <Button className='btn-green' type='primary' onClick={() => setIsSubmit(true)}>Cadastrar e Agendar Sessão</Button>,
+            <Button type='primary' htmlType='submit' onClick={() => setIsSubmit(true)} >{isNewRegister ? 'Cadastrar' : 'Atualizar'}</Button>,
+            <Button hidden={!isNewRegister} className='btn-green' type='primary' onClick={() => setIsSubmit(true)}>Cadastrar e Agendar Sessão</Button>,
         ];
 
     return <>
-        <Modal className={styles['container']} title={props.isNewClient ? 'Novo Cliente' : 'Atualizar Cliente'} visible={props.visible} footer={buttons} closable={false} destroyOnClose={true} width={858}>
+        <Modal className={styles['container']} title={isNewRegister ? 'Novo Cliente' : 'Atualizar Cliente'} visible={props.visible} footer={buttons} closable={false} destroyOnClose={true} width={858}>
             {props.isLoading ?
                 <Skeleton active />
                 :
@@ -161,10 +151,10 @@ const ClientForm: FC<Props> = (props) => {
                                             <Select name='status' isRequired={true} label='Status' options={convertEnumToOptionData(ClientStatusEnum)} placeholder={'Selecione...'} style={{ width: '22%' }} className={styles['selectGroup']} />
                                         </div>
                                         <div className={styles['groupField']}>
-                                            <Select name='gender' label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
+                                            <Select name='gender' isRequired={true} label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                             <Field autoComplete='false' key='phone' label='Telefone' name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <Field autoComplete='false' key='email' label='Email' name='email' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
-                                            <DatePicker defaultValue={values?.birthDate} onChange={(e) => setValues({ ...values, birthDate: e })} key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '22%' }} className={styles['inputGroup']} />
+                                            <DatePicker defaultValue={values.birthDate && moment(values.birthDate)} onChange={(e) => setValues({ ...values, birthDate: e })} key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '22%' }} className={styles['inputGroup']} />
                                         </div>
                                         <div style={{ maxWidth: 850 }}>
                                             <div className={styles['groupField']}>
