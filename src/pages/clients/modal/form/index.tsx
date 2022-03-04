@@ -1,9 +1,10 @@
 import { Button, Divider, Modal, Skeleton, Tabs, } from "antd";
 import moment from "moment";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
 import DatePicker from "../../../../components/ui/datePicker";
 import Field from "../../../../components/ui/field";
+import FieldMask from "../../../../components/ui/fieldMask";
 import FieldNumber from "../../../../components/ui/fieldNumber";
 import Form from "../../../../components/ui/form";
 import Select, { IOptionData } from "../../../../components/ui/select";
@@ -33,7 +34,18 @@ const ClientForm: FC<Props> = (props) => {
     const [cityOptions, setCityOptions] = useState<IOptionData[]>([]);
     const [isForeignCountry, setIsForeignCountry] = useState(false);
     const [isNewRegister] = useState<boolean>((props.client?.clientId ?? 0) == 0);
-    const [values, setValues] = useState(isNewRegister ? { countryId: 32, status: ClientStatusEnum.Ativo } as IClientResponse : props.client);
+    const [values, setValues] = useState(isNewRegister ? { countryFk: 32, status: ClientStatusEnum.Ativo } as IClientResponse : props.client);
+
+    useEffect(() => {
+        if (values.state) {
+            var cities = getCitiesByState(values.state);
+            setCityOptions(cities);
+        }
+
+        if (values.countryFk) {
+            setIsForeignCountry(values?.countryFk != 32);
+        }
+    }, []);
 
     const register = (values: IClientResponse) => {
         if (values) {
@@ -45,7 +57,7 @@ const ClientForm: FC<Props> = (props) => {
     }
 
     const onClose = () => {
-        setValues({ countryId: 32 } as IClientResponse);
+        setValues({ countryFk: 32 } as IClientResponse);
         setCountry('Brasil');
         setIsForeignCountry(false);
 
@@ -71,7 +83,7 @@ const ClientForm: FC<Props> = (props) => {
                 {
                     ...values,
                     state: undefined,
-                    cityId: undefined
+                    cityFk: undefined
                 }
             );
         }
@@ -82,9 +94,9 @@ const ClientForm: FC<Props> = (props) => {
             setValues(
                 {
                     ...values,
-                    countryId: undefined,
+                    countryFk: undefined,
                     state: undefined,
-                    cityId: undefined
+                    cityFk: undefined
                 }
             );
         }
@@ -98,14 +110,14 @@ const ClientForm: FC<Props> = (props) => {
             setValues({
                 ...values,
                 state: state,
-                cityId: parseInt(cities[0].value.toString())
+                cityFk: parseInt(cities[0].value.toString())
             });
         }
         else {
             setValues({
                 ...values,
                 state: undefined,
-                cityId: undefined
+                cityFk: undefined
             });
         }
 
@@ -114,7 +126,7 @@ const ClientForm: FC<Props> = (props) => {
     const changeCity = (cityId?: number) => {
         setValues({
             ...values,
-            cityId: cityId
+            cityFk: cityId
         });
     }
 
@@ -171,8 +183,8 @@ const ClientForm: FC<Props> = (props) => {
                                 <TabPane tab="Dados Complementares" key="3">
                                     <div style={{ maxWidth: 850 }}>
                                         <div className={styles['groupField']}>
-                                            <Field autoComplete='false' key='CPF' label='CPF' name='CPF' style={{ width: '24%' }} className={styles['inputGroup']}></Field>
-                                            <Field autoComplete='false' key='RG' label='RG' name='RG' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <FieldMask mask="111.111.111-11" autoComplete='false' key='cpf' label='CPF' name='cpf' style={{ width: '24%' }} className={styles['inputGroup']} />
+                                            <Field autoComplete='false' key='rg' label='RG' name='rg' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <Select name='serviceModality' label='Modalidade' options={convertEnumToOptionData(ServiceModalityEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                             <Select name='maritalStatus' label='Estado Civil' options={convertEnumToOptionData(MaritalStatusEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
                                         </div>
@@ -190,7 +202,7 @@ const ClientForm: FC<Props> = (props) => {
                                 </TabPane>
                                 <TabPane tab="Dados de Endereço" key="4">
                                     <div className={styles['groupField']}>
-                                        <Field autoComplete='false' key='zip' label='CEP' name='zip' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                        <FieldMask mask="11.111-111" autoComplete='false' key='zip' label='CEP' name='zip' style={{ width: '33%' }} className={styles['inputGroup']} />
                                         <Field autoComplete='false' key='streetAddress' label='Logradouro' name='streetAddress' style={{ width: '66%' }} className={styles['inputGroup']}></Field>
                                     </div>
                                     <div className={styles['groupField']}>
@@ -199,9 +211,9 @@ const ClientForm: FC<Props> = (props) => {
                                         <Field autoComplete='false' key='district' label='Bairro' name='district' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                     </div>
                                     <div className={styles['groupField']}>
-                                        <Select name='countryId' label='País' onSelect={(e, o) => changeCountry(o.children)} onClear={() => changeCountry()} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
+                                        <Select name='countryFk' label='País' onSelect={(e, o) => changeCountry(o.children)} onClear={() => changeCountry()} options={countriesOptions} placeholder={'Selecione...'} style={{ width: '34%' }} className={styles['selectGroup']} />
                                         <Select hidden={isForeignCountry} onClear={() => changeState()} name='state' label='Estado' onSelect={changeState} options={getStatesOptionsData()} disabled={!countrySelected} placeholder={countrySelected ? 'Selecione...' : 'Selecione um país...'} style={{ width: '34%' }} className={styles['selectGroup']} />
-                                        <Select hidden={isForeignCountry} name='cityId' label='Cidade' onClear={() => changeCity()} onSelect={changeCity} options={cityOptions} disabled={!values.state} placeholder={values.state ? 'Selecione...' : 'Selecione um estado...'} style={{ width: '33%' }} className={styles['selectGroup']} />
+                                        <Select hidden={isForeignCountry} name='cityFk' label='Cidade' onClear={() => changeCity()} onSelect={changeCity} options={cityOptions} disabled={!values.state} placeholder={values.state ? 'Selecione...' : 'Selecione um estado...'} style={{ width: '33%' }} className={styles['selectGroup']} />
                                         <Field hidden={!isForeignCountry} autoComplete='false' key='foreignStateName' label='Estado/Província/Região' name='foreignStateName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                         <Field hidden={!isForeignCountry} autoComplete='false' key='foreignCityName' label='Cidade' name='foreignCityName' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
                                     </div>
