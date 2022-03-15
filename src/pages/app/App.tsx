@@ -11,9 +11,9 @@ import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerSt
 import ShellHost from '../../components/shellHost';
 import Clients from '../clients';
 import Calendar from '../calendar';
+import ClientPanel from '../clientPanel';
 import { isAuthenticatedSelector } from '../../store/auth/Auth.selector';
 import { SystemActions } from '../../store/system/System.actions';
-import { Skeleton } from 'antd';
 
 interface IApp {
   isAuthenticated: boolean;
@@ -59,6 +59,7 @@ const App: FC<Props> = ({ isAuthenticated, cities, countries }) => {
               <Switch>
                 <Route path='/' exact component={Dashboard} />
                 <Route path='/clients' exact component={Clients} />
+                <Route path='/clients/:clientId' exact component={ClientPanel} />
                 <Route path='/calendar' exact component={Calendar} />
               </Switch>
             </ShellHost>)

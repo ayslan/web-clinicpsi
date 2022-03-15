@@ -1,4 +1,4 @@
-import { Button, Divider, Modal, Skeleton, Tabs, } from "antd";
+import { Button, Modal, Skeleton, Tabs, } from "antd";
 import moment from "moment";
 import React, { FC, useEffect, useState } from "react";
 import { connect, ConnectedProps, useDispatch } from "react-redux";
@@ -164,7 +164,7 @@ const ClientForm: FC<Props> = (props) => {
                                         </div>
                                         <div className={styles['groupField']}>
                                             <Select name='gender' isRequired={true} label='Sexo' options={convertEnumToOptionData(GenderEnum)} placeholder={'Selecione...'} style={{ width: '25%' }} className={styles['selectGroup']} />
-                                            <Field autoComplete='false' key='phone' label='Telefone' name='phone' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
+                                            <FieldMask autoComplete='false' key='phone' mask='(11) 11111-1111' label='Telefone' name='phone' style={{ width: '25%' }} className={styles['inputGroup']} />
                                             <Field autoComplete='false' key='email' label='Email' name='email' style={{ width: '25%' }} className={styles['inputGroup']}></Field>
                                             <DatePicker defaultValue={values.birthDate && moment(values.birthDate)} onChange={(e) => setValues({ ...values, birthDate: e })} key='birthDate' label='Data de Nascimento' name='birthDate' style={{ width: '22%' }} className={styles['inputGroup']} />
                                         </div>
@@ -195,7 +195,7 @@ const ClientForm: FC<Props> = (props) => {
                                         </div>
                                         <div className={styles['groupField']}>
                                             <Field autoComplete='false' key='emergencyContact' label='Contato de Emergência' name='emergencyContact' style={{ width: '66%' }} className={styles['inputGroup']}></Field>
-                                            <Field autoComplete='false' key='emergencyPhone' label='Telefone de Emergência' name='emergencyPhone' style={{ width: '33%' }} className={styles['inputGroup']}></Field>
+                                            <FieldMask autoComplete='false' key='emergencyPhone' mask='(11) 11111-1111' label='Telefone de Emergência' name='emergencyPhone' style={{ width: '33%' }} className={styles['inputGroup']} />
                                         </div>
                                         <Select mode='tags' name='tags' label='Tags' className={styles['selectGroup']} style={{ width: '100%' }} placeholder='Informe TAGS para o cliente' />
                                     </div>

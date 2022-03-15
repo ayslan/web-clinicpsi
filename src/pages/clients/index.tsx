@@ -4,12 +4,10 @@ import { FC } from 'react';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import PageContent from '../../components/ui/pageContent';
 import { IClientResponse } from '../../data/interfaces/client/IClient';
-import { history } from '../../store';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
 import { ClientActions } from '../../store/client/Client.actions';
-import { SystemActions } from '../../store/system/System.actions';
-import { getColumns } from './Clients.columns';
-import styles from './Clients.module.scss';
+import { getColumns } from './index.columns';
+import styles from './index.module.scss'
 import ClientForm from './modal/form'
 
 const Clients: FC<Props> = (props) => {
