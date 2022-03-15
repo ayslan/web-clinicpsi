@@ -10,7 +10,7 @@ export interface IButtonProps extends ButtonProps {
 
 const Button: FC<IButtonProps> = (props) => {
     return (
-        <ButtonAnt {...props} style={{ height: props.height ?? 37, width: props.width }}>
+        <ButtonAnt {...props}>
             {props.children}
         </ButtonAnt>
     );

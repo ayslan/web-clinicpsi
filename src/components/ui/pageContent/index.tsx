@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from "react";
-import { Breadcrumb, BreadcrumbProps, PageHeader } from 'antd';
+import { Breadcrumb, PageHeader } from 'antd';
 import styles from './PageContent.module.scss';
 import { HomeOutlined } from "@ant-design/icons";
 import { history } from "../../../store";

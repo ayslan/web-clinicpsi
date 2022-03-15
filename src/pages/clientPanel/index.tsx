@@ -1,11 +1,14 @@
-import { Skeleton } from 'antd';
+import { CalendarOutlined, CheckCircleTwoTone, ClockCircleOutlined, FormOutlined, MessageTwoTone, WhatsAppOutlined } from '@ant-design/icons';
+import { Dropdown, Menu, Skeleton, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
 import { IBreadCrumb } from '../../components/interfaces/IBreadCrumb';
+import Button from '../../components/ui/button';
 import PageContent from '../../components/ui/pageContent';
 import { IGlobalReducerState } from '../../store/base/interface/IGlobalReducerState';
 import styles from './index.module.scss';
+const { TabPane } = Tabs;
 
 const breadCrumb = [
     {
@@ -17,6 +20,14 @@ const breadCrumb = [
     }
 ] as IBreadCrumb[];
 
+const actions = (
+    <Menu>
+        <Menu.Item key='1'>Inativar</Menu.Item>
+        <Menu.Item key='2'>Excluir</Menu.Item>
+        <Menu.Item key='3'>Gerar PDF</Menu.Item>
+    </Menu>
+);
+
 const ClientPanel: FC<Props> = (props) => {
     var dispatch = useDispatch();
 
@@ -26,7 +37,50 @@ const ClientPanel: FC<Props> = (props) => {
                 <Skeleton active />
                 :
                 <>
-
+                    <div className={styles['client-data']}>
+                        <div className={styles['data-1']}>
+                            <h1>José da Silva Xavier</h1>
+                            <label>
+                                <WhatsAppOutlined /> (62) 98534-9136
+                            </label><br />
+                            <label>
+                                <CheckCircleTwoTone twoToneColor='#52c41a' /> Ativo
+                            </label>
+                        </div>
+                        <div className={styles['data-2']}>
+                            <span className={styles['description']}>Próxima Sessão</span>
+                            <label><ClockCircleOutlined /> 11:00</label>
+                            <label><CalendarOutlined /> Terça, 31/03/2022</label>
+                            <Button size='small' type='link'>Alterar Sessão</Button>
+                        </div>
+                        <div className={styles['data-2']}>
+                            <span className={styles['description']}>Valor Sessão</span>
+                            <label>R$ 120,00</label>
+                        </div>
+                        <div className={styles['buttons']}>
+                            <Button type='primary'>Agendar Sessões</Button>
+                            <Button type='default' style={{ marginLeft: 15 }}>Editar Cadastro</Button>
+                            <Dropdown.Button overlay={actions}></Dropdown.Button>
+                        </div>
+                    </div>
+                    <div className={styles['client-control']}>
+                        <Tabs style={{ height: '390px' }}>
+                            <TabPane tab='Visão Geral' key='1'>
+                            </TabPane>
+                            <TabPane tab='Dados' key='2'>
+                            </TabPane>
+                            <TabPane tab='Anamnese' key='3'>
+                            </TabPane>
+                            <TabPane tab='Sessões' key='4'>
+                            </TabPane>
+                            <TabPane tab='Financeiro' key='5'>
+                            </TabPane>
+                            <TabPane tab='Arquivos/Documentos' key='6'>
+                            </TabPane>
+                            <TabPane tab='Configurações' key='7'>
+                            </TabPane>
+                        </Tabs>
+                    </div>
                 </>
             }
         </PageContent>
