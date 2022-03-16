@@ -1,7 +1,10 @@
 .container {
+    background-color: #f9fafd !important;
     .client-data {
         padding: 12px;
-        background-color: #f7f7f7;
+        background-color: #fafafa;
+        border: #f0f0f0 1px solid;
+        border-radius: 3px;
         height: 130px;
         width: 100%;
         display: flex;
@@ -17,9 +20,10 @@
         }
 
         .data-1 {
+            display: grid;
             width: 250px;
             h1 {
-                margin-bottom: 27px;
+                margin-bottom: 16px;
             }
         }
 
@@ -40,8 +44,8 @@
 
         .buttons {
             position: relative;
-            left: calc(100% - 1005px);
-            top: 30px;
+            left: calc(100% - 1030px);
+            top: 35px;
             display: flex;
 
             [class*="ant-dropdown-button"] {
@@ -53,5 +57,17 @@
     .client-control {
         position: relative;
         top: 10px;
+
+        [class$="ant-tabs-nav"] {
+            margin: 0px !important;
+        }
+
+        .overview {
+            border-left: #f0f0f0 1px solid;
+            border-right: #f0f0f0 1px solid;
+            border-bottom: #f0f0f0 1px solid;
+            height: calc(100vh - 350px);
+            padding: 10px;
+        }
     }
 }

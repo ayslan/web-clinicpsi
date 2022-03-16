@@ -1,5 +1,5 @@
 import { CalendarOutlined, CheckCircleTwoTone, ClockCircleOutlined, FormOutlined, MessageTwoTone, WhatsAppOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Skeleton, Tabs } from 'antd';
+import { Card, Dropdown, Menu, Skeleton, Tabs, Tag, Timeline } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { FC } from 'react';
 import { connect, ConnectedProps, useDispatch } from 'react-redux';
@@ -40,11 +40,11 @@ const ClientPanel: FC<Props> = (props) => {
                     <div className={styles['client-data']}>
                         <div className={styles['data-1']}>
                             <h1>José da Silva Xavier</h1>
-                            <label>
+                            <label style={{ marginBottom: 6 }}>
                                 <WhatsAppOutlined /> (62) 98534-9136
-                            </label><br />
-                            <label>
-                                <CheckCircleTwoTone twoToneColor='#52c41a' /> Ativo
+                            </label>
+                            <label style={{ marginLeft: -2 }}>
+                                <Tag color="green"><CheckCircleTwoTone twoToneColor='#52c41a' /> Ativo</Tag>
                             </label>
                         </div>
                         <div className={styles['data-2']}>
@@ -58,14 +58,19 @@ const ClientPanel: FC<Props> = (props) => {
                             <label>R$ 120,00</label>
                         </div>
                         <div className={styles['buttons']}>
-                            <Button type='primary'>Agendar Sessões</Button>
+                            <Button type='primary' icon={<CalendarOutlined />}>Agendar Sessões</Button>
                             <Button type='default' style={{ marginLeft: 15 }}>Editar Cadastro</Button>
                             <Dropdown.Button overlay={actions}></Dropdown.Button>
                         </div>
                     </div>
                     <div className={styles['client-control']}>
-                        <Tabs style={{ height: '390px' }}>
-                            <TabPane tab='Visão Geral' key='1'>
+                        <Tabs type="card">
+                            <TabPane tab='Visão Geral' key='1' className={styles['overview']}>
+                                <div>
+                                    <Card size="small" style={{ width: '50%' }} type='inner' title="Última Sessão">
+
+                                    </Card>
+                                </div>
                             </TabPane>
                             <TabPane tab='Dados' key='2'>
                             </TabPane>
@@ -75,7 +80,7 @@ const ClientPanel: FC<Props> = (props) => {
                             </TabPane>
                             <TabPane tab='Financeiro' key='5'>
                             </TabPane>
-                            <TabPane tab='Arquivos/Documentos' key='6'>
+                            <TabPane tab='Documentos' key='6'>
                             </TabPane>
                             <TabPane tab='Configurações' key='7'>
                             </TabPane>
