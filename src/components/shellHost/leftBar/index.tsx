@@ -97,6 +97,7 @@ const LeftBar: FC<ILeftBar> = ({ isCollapsed }) => {
                 <SubMenu key="/settings" icon={<SettingOutlined className={styles['icon']} />} title="Configurações">
                     <Menu.Item key="3">Usuários<Link to='/settings/users' /></Menu.Item>
                     <Menu.Item key="4">Cobrança<Link to='/settings/billing' /></Menu.Item>
+                    <Menu.Item key="5">Anamnese<Link to='/settings/anamnesis' /></Menu.Item>
                 </SubMenu>
                 <Menu.Item key='/logout' icon={<LogoutOutlined className={styles['icon']} />} onClick={onLogout}>
                     Sair
