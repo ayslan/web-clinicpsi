@@ -1,0 +1,20 @@
+.container {
+    .toolBar {
+        margin-bottom: 15px;
+
+        button:not(last-child) {
+            margin-right: 10px;
+        }
+    }
+
+    .formHeader {
+        margin-top: 20px;
+    }
+
+    .formActions {
+        margin-top: 40px;
+        button {
+            margin-right: 10px;
+        }
+    }
+}

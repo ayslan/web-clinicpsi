@@ -3,5 +3,6 @@ import { IReducerStateBase } from '../../base/interface/IReducerStateBase';
 
 export interface IAnamnesisState extends IReducerStateBase {
   anamnesis?: IAnamnesis[];
+  anamnesisForm?: IAnamnesis;
   isLoadingAnamnesis: boolean;
 }

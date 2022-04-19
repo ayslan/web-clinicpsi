@@ -1,3 +1,4 @@
+import { IAnamnesisState } from "../../anamnesis/interfaces/IAnamnesisState";
 import { IAuthState } from "../../auth/interfaces/IAuthState";
 import { IClientState } from "../../client/interfaces/IClientState";
 import { IConfigState } from "../../config/interfaces/IConfigState";
@@ -8,4 +9,5 @@ export interface IGlobalReducerState {
   client: IClientState;
   config: IConfigState;
   system: ISystemState;
+  anamnesis: IAnamnesisState;
 }

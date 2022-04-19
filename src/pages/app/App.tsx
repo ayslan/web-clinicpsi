@@ -14,6 +14,8 @@ import Calendar from '../calendar';
 import ClientPanel from '../clientPanel';
 import { isAuthenticatedSelector } from '../../store/auth/Auth.selector';
 import { SystemActions } from '../../store/system/System.actions';
+import Anamnesis from '../settings/anamnesis';
+import AnamnesisForm from '../settings/anamnesis/form';
 
 interface IApp {
   isAuthenticated: boolean;
@@ -61,6 +63,9 @@ const App: FC<Props> = ({ isAuthenticated, cities, countries }) => {
                 <Route path='/clients' exact component={Clients} />
                 <Route path='/clients/:clientId' exact component={ClientPanel} />
                 <Route path='/calendar' exact component={Calendar} />
+                <Route path='/settings/anamnesis' exact component={Anamnesis} />
+                <Route path='/settings/anamnesis/form/:anamnesisId' exact component={AnamnesisForm} />
+                <Route path='/settings/anamnesis/form' exact component={AnamnesisForm} />
               </Switch>
             </ShellHost>)
           :

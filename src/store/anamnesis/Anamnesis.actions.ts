@@ -5,6 +5,8 @@ export enum AnamnesisActionKeys {
   ANAMNESIS_LIST_REQUEST = 'ANAMNESIS_LIST_REQUEST',
   ANAMNESIS_LIST_SUCCESS = 'ANAMNESIS_LIST_SUCCESS',
 
+  SET_ANAMNESIS_FORM = 'SET_ANAMNESIS_FORM',
+
   // ANAMNESIS_REGISTER_REQUEST = 'ANAMNESIS_REGISTER_REQUEST',
   // ANAMNESIS_REGISTER_SUCCESS = 'ANAMNESIS_REGISTER_SUCCESS',
 
@@ -17,6 +19,8 @@ export enum AnamnesisActionKeys {
 export const AnamnesisActions = {
   list: (): ListAction => createAction(AnamnesisActionKeys.ANAMNESIS_LIST_REQUEST),
   listSuccess: (response: IAnamnesis[]): ListSuccessAction => createAction(AnamnesisActionKeys.ANAMNESIS_LIST_SUCCESS, response),
+
+  setAnamnesisForm: (register: IAnamnesis): SetAnamnesisFormAction => createAction(AnamnesisActionKeys.SET_ANAMNESIS_FORM, register),
 
   // register: (request: IClientResponse): RegisterAction => createAction(ClientActionKeys.CLIENT_REGISTER_REQUEST, request),
   // registerSuccess: (response: IClientResponse): RegisterSuccessAction => createAction(ClientActionKeys.CLIENT_REGISTER_SUCCESS, response),
@@ -31,6 +35,8 @@ export type AnamnesisActionUnion = ActionsUnion<typeof AnamnesisActions>;
 
 export type ListAction = Action<AnamnesisActionKeys.ANAMNESIS_LIST_REQUEST>;
 export type ListSuccessAction = Action<AnamnesisActionKeys.ANAMNESIS_LIST_SUCCESS, IAnamnesis[]>;
+
+export type SetAnamnesisFormAction = Action<AnamnesisActionKeys.SET_ANAMNESIS_FORM, IAnamnesis>;
 
 // export type RegisterAction = Action<ClientActionKeys.CLIENT_REGISTER_REQUEST, IClientResponse>;
 // export type RegisterSuccessAction = Action<ClientActionKeys.CLIENT_REGISTER_SUCCESS, IClientResponse>;

@@ -23,6 +23,12 @@ const anamnesisReducer = (state = initialState, action: AnamnesisActionUnion): I
                 anamnesis: action.payload
             };
 
+        case AnamnesisActionKeys.SET_ANAMNESIS_FORM:
+            return {
+                ...state,
+                anamnesisForm: action.payload
+            }
+
         // case ClientActionKeys.CLIENT_REGISTER_REQUEST:
         //     return { ...state, isLoading: true };
         // case ClientActionKeys.CLIENT_REGISTER_SUCCESS:

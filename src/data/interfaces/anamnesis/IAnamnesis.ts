@@ -1,7 +1,8 @@
 export interface IAnamnesis {
     anamnesisId: number,
     groupName: string,
-    tenantFk: number
+    creationDateUtc: Date,
+    tenantFk: number,
     topics: IAnamnesisTopic[]
 }
 
