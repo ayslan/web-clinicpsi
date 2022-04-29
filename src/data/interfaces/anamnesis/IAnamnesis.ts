@@ -1,3 +1,5 @@
+import { AnamnesisFieldTypeEnum } from "../../enums/AnamnesisEnum"
+
 export interface IAnamnesis {
     anamnesisId: number,
     groupName: string,
@@ -18,7 +20,7 @@ export interface IAnamnesisField {
     anamnesisFieldId: number,
     title: string,
     order: number,
-    anamnesisFieldType: string,
+    anamnesisFieldType: AnamnesisFieldTypeEnum,
     options: string[],
     anamnesisTopicFk: number
 }
