@@ -7,7 +7,7 @@ import { ObjectSchema } from 'yup';
 import { CSSProperties } from 'react';
 
 export interface IForm {
-    onSubmit: (values?: any, erros?: string[]) => void;
+    onSubmit?: (values?: any, erros?: string[]) => void;
     initialValues?: object;
     schema?: ObjectSchema;
     decorators?: Decorator[];
@@ -51,7 +51,7 @@ const Form: FC<IForm> = ({
                 {},
             );
             if (isSubmited) {
-                onSubmit(undefined, []);
+                onSubmit && onSubmit(undefined, []);
             }
             return errors;
         }
@@ -60,7 +60,7 @@ const Form: FC<IForm> = ({
     return (
         <div className={`${styles['Form']} ${className || ''}`} style={style}>
             <FormReact
-                onSubmit={(values) => onSubmit(values)}
+                onSubmit={(values) => onSubmit && onSubmit(values)}
                 initialValues={initialValues}
                 keepDirtyOnReinitialize={true}
                 mutators={{

@@ -22,5 +22,7 @@ export interface IAnamnesisField {
     order: number,
     anamnesisFieldType: AnamnesisFieldTypeEnum,
     options: string[],
-    anamnesisTopicFk: number
+    anamnesisTopicFk: number,
+
+    optionsAux: string
 }

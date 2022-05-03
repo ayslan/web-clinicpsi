@@ -1,15 +1,16 @@
 import React, { FC, useState } from "react";
 import Modal from "antd/lib/modal/Modal";
-import { Button, Input, List, Space } from "antd";
+import { Button, Input, List } from "antd";
 
 import styles from './index.module.scss';
 import Form from "../../../../../components/ui/form";
 import FieldForm from "../../../../../components/ui/field";
 import schema from "./index.schema";
 import { IAnamnesisField } from "../../../../../data/interfaces/anamnesis/IAnamnesis";
-import { AnamnesisFieldTypeEnum } from "../../../../../data/enums/AnamnesisEnum";
-import { useEffect } from "preact/hooks";
 import Radio, { IItemRadio } from "../../../../../components/ui/radio";
+import { FaTrash } from "react-icons/fa";
+import TextAreaForm from "../../../../../components/ui/textArea";
+import { AnamnesisFieldTypeEnum } from "../../../../../data/enums/AnamnesisEnum";
 
 export interface IAnamnesisFieldFormModal {
     topicId: number,
@@ -22,23 +23,21 @@ export interface IAnamnesisFieldFormModal {
 const AnamnesisFieldForm: FC<Props> = (props) => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [defaultValues, setDefaultValues] = useState(props.defaultValues ?? { anamnesisTopicFk: props.topicId, anamnesisFieldType: 1 } as IAnamnesisField);
-    const [newOptionValue, setNewOptionValue] = useState('');
 
     const submit = (values: IAnamnesisField) => {
         if (values) {
-
-            console.log(values);
-
-            //props.onSubmit(value);
-            //props.onClose();
+            values.options = defaultValues.options;
+            props.onSubmit(values);
+            props.onClose();
         }
         setIsSubmit(false);
     }
 
     const onAddNewOption = () => {
-        if (newOptionValue?.length > 0) {
-            var options = { ...defaultValues }?.options ?? [];
-            setDefaultValues({ ...defaultValues, options: [...options, newOptionValue] });
+        var options = { ...defaultValues }?.options ?? [];
+
+        if (defaultValues.optionsAux?.length > 0 && !options.includes(defaultValues.optionsAux)) {
+            setDefaultValues({ ...defaultValues, options: [...options, defaultValues.optionsAux], optionsAux: '' });
         }
     }
 
@@ -57,14 +56,14 @@ const AnamnesisFieldForm: FC<Props> = (props) => {
     ] as IItemRadio[];
 
     return (
-        <Form onSubmit={submit} schema={schema} isSubmited={isSubmit} initialValues={defaultValues}>
-            <Modal title='Novo Tópico' visible={props.visible} footer={buttons} onCancel={props.onClose} destroyOnClose={true}>
-                <div className={styles['container']}>
-                    <FieldForm autoComplete='false' key='nome' label='Texto da Pergunta' name='title' className={styles['inputForm']}></FieldForm>
+        <Modal title='Novo Tópico' visible={props.visible} footer={buttons} onCancel={props.onClose} destroyOnClose={true}>
+            <div className={styles['container']}>
+                <Form onSubmit={submit} schema={schema} isSubmited={isSubmit} initialValues={defaultValues}>
+                    <TextAreaForm rows={2} autoComplete='false' key='title' label='Texto da Pergunta' name='title' className={styles['inputForm']}></TextAreaForm>
                     <Radio name='anamnesisFieldType' bordered={true} label='Tipo de Campo' onChange={(e) => setDefaultValues({ ...defaultValues, anamnesisFieldType: parseInt(e.target?.value) })} items={itemsTypeField} />
-                    <div className={styles['optionsField']} >
+                    <div className={styles['optionsField']} hidden={defaultValues.anamnesisFieldType === AnamnesisFieldTypeEnum.TextField || defaultValues.anamnesisFieldType === AnamnesisFieldTypeEnum.LargeTextField} >
                         <Input.Group compact>
-                            <FieldForm label="Opções" placeholder="Texto da Opção" onInput={(e) => setNewOptionValue(e)} name="optionsAux" style={{ width: 'calc(100% - 137px)' }} />
+                            <FieldForm maxLength={45} label="Opções" placeholder="Texto da Opção" onInput={(e) => setDefaultValues({ ...defaultValues, optionsAux: e })} name="optionsAux" style={{ width: 'calc(100% - 137px)' }} />
                             <Button type="primary" onClick={onAddNewOption} >Adicionar Opção</Button>
                         </Input.Group>
                         <List
@@ -72,12 +71,16 @@ const AnamnesisFieldForm: FC<Props> = (props) => {
                             size="small"
                             bordered
                             dataSource={defaultValues.options}
-                            renderItem={item => <List.Item>{item}</List.Item>}
+                            renderItem={item =>
+                                <List.Item className={styles['items']} >
+                                    <label className={styles['name']}>{item}</label>
+                                    <FaTrash title='Remover Item' className={styles['trash']} color='#e95151' onClick={() => setDefaultValues({ ...defaultValues, options: [...defaultValues.options?.filter(x => x !== item)] })} />
+                                </List.Item>}
                         />
                     </div>
-                </div>
-            </Modal>
-        </Form>
+                </Form>
+            </div>
+        </Modal>
     );
 }
 

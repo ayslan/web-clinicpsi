@@ -14,5 +14,14 @@
             position: relative;
             top: 25px;
         }
+        .items {
+            .name {
+                width: calc(100% - 50px);
+            }
+
+            .trash {
+                cursor: pointer;
+            }
+        }
     }
 }
