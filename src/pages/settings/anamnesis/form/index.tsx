@@ -7,10 +7,12 @@ import styles from './index.module.scss';
 import Form from "../../../../components/ui/form";
 import Field from '../../../../components/ui/field';
 import { history } from '../../../../store';
-import { Collapse, Divider } from 'antd';
+import { Collapse, Divider, Radio } from 'antd';
 import { IGlobalReducerState } from '../../../../store/base/interface/IGlobalReducerState';
 import { IAnamnesis, IAnamnesisTopic } from '../../../../data/interfaces/anamnesis/IAnamnesis';
 import AnamnesisTopicForm from '../modals/topicForm';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { FaPen, FaTrash } from 'react-icons/fa';
 const { Panel } = Collapse;
 
 const AnamnesisForm: FC<Props> = (props) => {
@@ -18,16 +20,29 @@ const AnamnesisForm: FC<Props> = (props) => {
     const [isSubmit, setIsSubmit] = useState(false);
     const [anamnesis, setAnamnesis] = useState({ topics: [] as IAnamnesisTopic[] } as IAnamnesis);
     const [isVisibleAnamnesisTopicModal, setIsVisibleAnamnesisTopicModal] = useState(false);
+    const [newTopicAuxId, setNewTopicAuxId] = useState(-1);
 
     const onAddTopic = (name: string) => {
         let anamnesisAux = { ...anamnesis };
-        anamnesisAux.topics = [...anamnesisAux.topics, { name: name } as IAnamnesisTopic];
+        anamnesisAux.topics = [...anamnesisAux.topics, { name: name, anamnesisTopicId: newTopicAuxId } as IAnamnesisTopic];
         setAnamnesis(anamnesisAux);
+        setNewTopicAuxId(newTopicAuxId - 1);
     }
 
     const submit = () => {
 
     }
+
+    const optionsTopic = (topicId: number) =>
+        <div>
+            <Button type='primary' size='small' style={{ marginRight: 15 }}>Adicionar Pergunta</Button>
+            <Radio.Group size='small' style={{ marginRight: 15 }}>
+                <Radio.Button value="large"><DownOutlined /></Radio.Button>
+                <Radio.Button value="default"><UpOutlined /></Radio.Button>
+            </Radio.Group>
+            <FaPen color='gray' style={{ marginRight: 15, position: 'relative', top: 2 }} />
+            <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { event.stopPropagation(); }} />
+        </div>
 
     return <>
         <PageContent title='Nova Anamnese' className={styles['container']}>
@@ -42,14 +57,12 @@ const AnamnesisForm: FC<Props> = (props) => {
                 </div>
                 <div className={styles['formActions']}>
                     <Button type='primary' onClick={() => setIsVisibleAnamnesisTopicModal(true)} >Adicionar Grupo de Perguntas</Button>
-                    <Button type='primary' >Adicionar Pergunta</Button>
-                    <Button type='default' >Ordenar Grupos</Button>
                 </div>
                 <div className={styles['topics']}>
                     <Collapse defaultActiveKey={['0']} onChange={(e) => console.log(e)}>
                         {
                             anamnesis?.topics.map((topic, index) => (
-                                <Panel header={topic.name} key={index}>
+                                <Panel header={topic.name} key={index} extra={optionsTopic(topic.anamnesisTopicId)}>
                                     [CAMPOS]
                                 </Panel>
                             ))
