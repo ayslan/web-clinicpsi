@@ -9,10 +9,11 @@ import Field from '../../../../components/ui/field';
 import { history } from '../../../../store';
 import { Collapse, Divider, Radio } from 'antd';
 import { IGlobalReducerState } from '../../../../store/base/interface/IGlobalReducerState';
-import { IAnamnesis, IAnamnesisTopic } from '../../../../data/interfaces/anamnesis/IAnamnesis';
+import { IAnamnesis, IAnamnesisField, IAnamnesisTopic } from '../../../../data/interfaces/anamnesis/IAnamnesis';
 import AnamnesisTopicForm from '../modals/topicForm';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { FaPen, FaTrash } from 'react-icons/fa';
+import AnamnesisFieldForm from '../modals/fieldForm';
 const { Panel } = Collapse;
 
 const AnamnesisForm: FC<Props> = (props) => {
@@ -22,11 +23,25 @@ const AnamnesisForm: FC<Props> = (props) => {
     const [isVisibleAnamnesisTopicModal, setIsVisibleAnamnesisTopicModal] = useState(false);
     const [newTopicAuxId, setNewTopicAuxId] = useState(-1);
 
+    const [isVisibleAnamnesisFieldModal, setIsVisibleAnamnesisFieldModal] = useState(false);
+    const [topicId, setTopicId] = useState(0);
+
     const onAddTopic = (name: string) => {
         let anamnesisAux = { ...anamnesis };
         anamnesisAux.topics = [...anamnesisAux.topics, { name: name, anamnesisTopicId: newTopicAuxId } as IAnamnesisTopic];
         setAnamnesis(anamnesisAux);
         setNewTopicAuxId(newTopicAuxId - 1);
+    }
+
+    const showFieldForm = (topicId: number, event: any) => {
+
+        setTopicId(topicId);
+        setIsVisibleAnamnesisFieldModal(true);
+        event.stopPropagation();
+    }
+
+    const onAddFieldForm = (values: IAnamnesisField) => {
+        console.log(values);
     }
 
     const submit = () => {
@@ -35,13 +50,13 @@ const AnamnesisForm: FC<Props> = (props) => {
 
     const optionsTopic = (topicId: number) =>
         <div>
-            <Button type='primary' size='small' style={{ marginRight: 15 }}>Adicionar Pergunta</Button>
+            <Button type='primary' size='small' style={{ marginRight: 15 }} onClick={event => { showFieldForm(topicId, event); }}>Adicionar Pergunta</Button>
             <Radio.Group size='small' style={{ marginRight: 15 }}>
                 <Radio.Button value="large"><DownOutlined /></Radio.Button>
                 <Radio.Button value="default"><UpOutlined /></Radio.Button>
             </Radio.Group>
             <FaPen color='gray' style={{ marginRight: 15, position: 'relative', top: 2 }} />
-            <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { event.stopPropagation(); }} />
+            <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { showFieldForm(topicId, event); }} />
         </div>
 
     return <>
@@ -73,6 +88,7 @@ const AnamnesisForm: FC<Props> = (props) => {
         </PageContent>
 
         <AnamnesisTopicForm visible={isVisibleAnamnesisTopicModal} onSubmit={onAddTopic} onClose={() => setIsVisibleAnamnesisTopicModal(false)} />
+        <AnamnesisFieldForm visible={isVisibleAnamnesisFieldModal} topicId={topicId} onSubmit={onAddFieldForm} onClose={() => setIsVisibleAnamnesisFieldModal(false)} />
     </>
 }
 
