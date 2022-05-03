@@ -1,7 +1,18 @@
-.inputForm {
-    margin-bottom: 17px;
+.container {
+    .inputForm {
+        margin-bottom: 17px;
 
-    input {
-        width: 100%;
+        input {
+            width: 100%;
+        }
+    }
+
+    .optionsField {
+        margin-top: 20px;
+
+        button {
+            position: relative;
+            top: 25px;
+        }
     }
 }

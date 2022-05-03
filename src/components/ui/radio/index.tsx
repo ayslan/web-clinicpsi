@@ -20,7 +20,8 @@ export interface IRadio {
   isRequired?: boolean;
   hidden?: boolean,
   disabled?: boolean,
-  items?: IItemRadio[]
+  items?: IItemRadio[],
+  bordered?: boolean
 }
 
 export interface IItemRadio {
@@ -39,7 +40,7 @@ const hasError = (meta: any, disabled?: boolean) => (
 const Radio: FC<IRadio> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', onFocus, onBlur, value,
-  onChange, isRequired, hidden, disabled, items
+  onChange, isRequired, hidden, disabled, items, bordered
 }) => {
 
   return (
@@ -55,7 +56,7 @@ const Radio: FC<IRadio> = ({
                 {...props.input}
                 disabled={disabled}
                 style={styleInput}
-                className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''}`}
+                className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''} ${bordered ? styles['bordered'] : ''}`}
                 onChange={onChange}
               >
                 <Space direction="vertical">
