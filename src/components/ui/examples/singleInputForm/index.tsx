@@ -3,8 +3,8 @@ import Modal from "antd/lib/modal/Modal";
 import { Button } from "antd";
 
 import styles from './index.module.scss';
-import Form from "../../../../../components/ui/form";
-import FieldForm from "../../../../../components/ui/field";
+import Form from "../../form";
+import FieldForm from "../../field";
 import schema from "./index.schema";
 
 export interface IAnamnesisTopicFormModal {
