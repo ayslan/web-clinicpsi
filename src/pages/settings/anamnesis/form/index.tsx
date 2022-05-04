@@ -18,18 +18,18 @@ const { Panel } = Collapse;
 const AnamnesisForm: FC<Props> = (props) => {
     var dispatch = useDispatch();
     const [isSubmit, setIsSubmit] = useState(false);
-    const [anamnesis, setAnamnesis] = useState({ topics: [] as IAnamnesisTopic[] } as IAnamnesis);
-    const [isVisibleAnamnesisTopicModal, setIsVisibleAnamnesisTopicModal] = useState(false);
+    const [anamnesis, setAnamnesis] = useState({ topics: [{ name: 'topic1', order: 4 }, { name: 'topic2', order: 2 }, { name: 'topic3', order: 3 }] as IAnamnesisTopic[] } as IAnamnesis);
     const [newTopicAuxId, setNewTopicAuxId] = useState(-1);
-    const [DVFormGrupoPerguntas, setDVFormGrupoPerguntas] = useState<any>();
-
     const [isVisibleAnamnesisFieldModal, setIsVisibleAnamnesisFieldModal] = useState(false);
     const [topicId, setTopicId] = useState(0);
+
+    const [DVFormGrupoPerguntas, setDVFormGrupoPerguntas] = useState<any>();
 
     const onAddTopic = () => {
         let name = DVFormGrupoPerguntas.name;
         let anamnesisAux = { ...anamnesis };
-        anamnesisAux.topics = [...anamnesisAux.topics, { name: name, anamnesisTopicId: newTopicAuxId } as IAnamnesisTopic];
+        let order = anamnesis.topics.sort((a, b) => a.order - b.order)[anamnesis.topics.length - 1].order + 1;
+        anamnesisAux.topics = [...anamnesisAux.topics, { name: name, order: order, anamnesisTopicId: newTopicAuxId } as IAnamnesisTopic];
         setAnamnesis(anamnesisAux);
         setNewTopicAuxId(newTopicAuxId - 1);
         setDVFormGrupoPerguntas({ name: '' });
@@ -81,15 +81,24 @@ const AnamnesisForm: FC<Props> = (props) => {
                 </Form>
             </div>
             <div className={styles['topics']}>
-                <Collapse defaultActiveKey={['0']} onChange={(e) => console.log(e)}>
-                    {
-                        anamnesis?.topics.map((topic, index) => (
-                            <Panel header={topic.name} key={index} extra={optionsTopic(topic.anamnesisTopicId)}>
-                                [CAMPOS]
-                            </Panel>
-                        ))
-                    }
-                </Collapse>
+
+                {anamnesis?.topics?.length > 0
+                    ?
+                    <Collapse defaultActiveKey={['0']}>
+                        {
+                            anamnesis?.topics.sort((a, b) => a.order - b.order).map((topic, index) => (
+                                <Panel header={topic.name} key={index} extra={optionsTopic(topic.anamnesisTopicId)}>
+                                    [CAMPOS]
+                                </Panel>
+                            ))
+                        }
+                    </Collapse>
+                    :
+                    <div className={styles['empty']}>
+                        Nenhum <b>Grupo de Perguntas</b> foi adicionado!
+                        <p>Para iniciar digite o nome e clique para adicionar o Grupo de Perguntas.</p>
+                    </div>
+                }
             </div>
         </PageContent>
         <AnamnesisFieldForm visible={isVisibleAnamnesisFieldModal} topicId={topicId} onSubmit={onAddFieldForm} onClose={() => setIsVisibleAnamnesisFieldModal(false)} />
