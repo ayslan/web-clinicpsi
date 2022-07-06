@@ -11,6 +11,7 @@ import Radio, { IItemRadio } from "../../../../../components/ui/radio";
 import { FaTrash } from "react-icons/fa";
 import TextAreaForm from "../../../../../components/ui/textArea";
 import { AnamnesisFieldTypeEnum } from "../../../../../data/enums/AnamnesisEnum";
+import { toast } from "react-toastify";
 
 export interface IAnamnesisFieldFormModal {
     topicId: number,
@@ -26,10 +27,16 @@ const AnamnesisFieldForm: FC<Props> = (props) => {
 
     const submit = (values: IAnamnesisField) => {
         if (values) {
-            values.options = defaultValues.options;
-            values.anamnesisTopicFk = props.topicId;
-            props.onSubmit(values);
-            props.onClose();
+            if ((values.anamnesisFieldType === AnamnesisFieldTypeEnum.MultipleOption || values.anamnesisFieldType === AnamnesisFieldTypeEnum.SingleOption)
+                && (defaultValues.options === undefined || defaultValues.options?.length === 0)) {
+                toast.error("Informe as opções do campo!");
+            }
+            else {
+                values.options = defaultValues.options;
+                values.anamnesisTopicFk = props.topicId;
+                props.onSubmit(values);
+                props.onClose();
+            }
         }
         setIsSubmit(false);
     }
@@ -62,7 +69,7 @@ const AnamnesisFieldForm: FC<Props> = (props) => {
                 <Form onSubmit={submit} schema={schema} isSubmited={isSubmit} initialValues={defaultValues}>
                     <TextAreaForm rows={2} autoComplete='false' key='title' label='Texto da Pergunta' name='title' className={styles['inputForm']}></TextAreaForm>
                     <Radio name='anamnesisFieldType' bordered={true} label='Tipo de Campo' onChange={(e) => setDefaultValues({ ...defaultValues, anamnesisFieldType: parseInt(e.target?.value) })} items={itemsTypeField} />
-                    <div className={styles['optionsField']} hidden={defaultValues.anamnesisFieldType === AnamnesisFieldTypeEnum.TextField || defaultValues.anamnesisFieldType === AnamnesisFieldTypeEnum.LargeTextField} >
+                    <div className={styles['optionsField']} hidden={[AnamnesisFieldTypeEnum.TextField, AnamnesisFieldTypeEnum.LargeTextField, AnamnesisFieldTypeEnum.YesNoOption].includes(defaultValues.anamnesisFieldType)} >
                         <Input.Group compact>
                             <Field maxLength={45} label="Opções" placeholder="Texto da Opção" onInput={(e) => setDefaultValues({ ...defaultValues, optionsAux: e })} name="optionsAux" style={{ width: 'calc(100% - 137px)' }} />
                             <Button type="primary" onClick={onAddNewOption} >Adicionar Opção</Button>

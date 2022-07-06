@@ -7,32 +7,56 @@ import styles from './index.module.scss';
 import Form from "../../../../components/ui/form";
 import Field from '../../../../components/ui/field';
 import { history } from '../../../../store';
-import { Collapse, Divider, Input, Radio } from 'antd';
+import { Collapse, Divider, Input, Modal, Radio } from 'antd';
 import { IGlobalReducerState } from '../../../../store/base/interface/IGlobalReducerState';
 import { IAnamnesis, IAnamnesisField, IAnamnesisTopic } from '../../../../data/interfaces/anamnesis/IAnamnesis';
-import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { DownOutlined, ExclamationCircleOutlined, UpOutlined } from '@ant-design/icons';
 import { FaPen, FaTrash } from 'react-icons/fa';
 import AnamnesisFieldForm from '../modals/fieldForm';
+import anamnesis from '..';
 const { Panel } = Collapse;
 
 const AnamnesisForm: FC<Props> = (props) => {
-    var dispatch = useDispatch();
+    let dispatch = useDispatch();
     const [isSubmit, setIsSubmit] = useState(false);
-    const [anamnesis, setAnamnesis] = useState({ topics: [{ name: 'topic1', order: 4 }, { name: 'topic2', order: 2 }, { name: 'topic3', order: 3 }] as IAnamnesisTopic[] } as IAnamnesis);
+    const [anamnesis, setAnamnesis] = useState({ topics: [{ anamnesisTopicId: 1, name: 'topic1', order: 4, fields: [] as IAnamnesisField[] }, { anamnesisTopicId: 2, name: 'topic2', order: 2, fields: [] as IAnamnesisField[] }, { anamnesisTopicId: 3, name: 'topic3', order: 3, fields: [] as IAnamnesisField[] }] as IAnamnesisTopic[] } as IAnamnesis);
     const [newTopicAuxId, setNewTopicAuxId] = useState(-1);
     const [isVisibleAnamnesisFieldModal, setIsVisibleAnamnesisFieldModal] = useState(false);
     const [topicId, setTopicId] = useState(0);
 
     const [DVFormGrupoPerguntas, setDVFormGrupoPerguntas] = useState<any>();
 
-    const onAddTopic = () => {
+    const handleAddTopic = () => {
         let name = DVFormGrupoPerguntas.name;
         let anamnesisAux = { ...anamnesis };
         let order = anamnesis.topics.sort((a, b) => a.order - b.order)[anamnesis.topics.length - 1].order + 1;
-        anamnesisAux.topics = [...anamnesisAux.topics, { name: name, order: order, anamnesisTopicId: newTopicAuxId } as IAnamnesisTopic];
+        anamnesisAux.topics = [...anamnesisAux.topics, { name: name, order: order, anamnesisTopicId: newTopicAuxId, fields: [] as IAnamnesisField[] } as IAnamnesisTopic];
         setAnamnesis(anamnesisAux);
         setNewTopicAuxId(newTopicAuxId - 1);
         setDVFormGrupoPerguntas({ name: '' });
+    }
+
+    const showModalRemoveTopic = (topicId: number, event: any) => {
+
+        let topic = anamnesis.topics.filter(t => t.anamnesisTopicId == topicId)[0];
+
+        Modal.confirm({
+            title: 'Remover Grupo de Perguntas',
+            icon: <ExclamationCircleOutlined />,
+            content: <label>Deseja remover o grupo de perguntas: <b>{topic.name}</b></label>,
+            okText: 'Confirmar',
+            cancelText: 'Cancelar',
+            onOk: () => handleRemoveTopic(topicId)
+        });
+
+        event.stopPropagation();
+    }
+
+    const handleRemoveTopic = (topicId: number) => {
+        let anamnesisAux = { ...anamnesis };
+        anamnesisAux.topics = anamnesisAux.topics.filter(t => t.anamnesisTopicId !== topicId);
+
+        setAnamnesis(anamnesisAux);
     }
 
     const showFieldForm = (topicId: number, event: any) => {
@@ -41,9 +65,13 @@ const AnamnesisForm: FC<Props> = (props) => {
         event.stopPropagation();
     }
 
-    const onAddFieldForm = (values: IAnamnesisField) => {
-        console.log(values);
+    const handleAddFieldForm = (values: IAnamnesisField) => {
+        let anamnesisAux = { ...anamnesis };
+        anamnesisAux.topics.filter(t => t.anamnesisTopicId === values.anamnesisTopicFk)[0].fields.push(values);
+
+        setAnamnesis(anamnesisAux);
     }
+
 
     const submit = () => {
 
@@ -57,7 +85,7 @@ const AnamnesisForm: FC<Props> = (props) => {
                 <Radio.Button value="default"><UpOutlined /></Radio.Button>
             </Radio.Group>
             <FaPen color='gray' style={{ marginRight: 15, position: 'relative', top: 2 }} />
-            <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { showFieldForm(topicId, event); }} />
+            <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { showModalRemoveTopic(topicId, event); }} />
         </div>
 
     return <>
@@ -76,19 +104,23 @@ const AnamnesisForm: FC<Props> = (props) => {
                 <Form initialValues={DVFormGrupoPerguntas}>
                     <Input.Group compact>
                         <Field maxLength={45} label="Grupos de Perguntas" placeholder="Nome do Grupo de Perguntas" onInput={(e: any) => setDVFormGrupoPerguntas({ name: e })} name="name" style={{ width: '500px' }} />
-                        <Button type='primary' onClick={() => onAddTopic()}>Adicionar Grupo de Perguntas</Button>
+                        <Button type='primary' onClick={() => handleAddTopic()}>Adicionar Grupo de Perguntas</Button>
                     </Input.Group>
                 </Form>
             </div>
             <div className={styles['topics']}>
-
                 {anamnesis?.topics?.length > 0
                     ?
                     <Collapse defaultActiveKey={['0']}>
                         {
                             anamnesis?.topics.sort((a, b) => a.order - b.order).map((topic, index) => (
                                 <Panel header={topic.name} key={index} extra={optionsTopic(topic.anamnesisTopicId)}>
-                                    [CAMPOS]
+                                    {
+                                        topic.fields.sort((a, b) => a.order - b.order).map((field, index) => (
+                                            <div>
+                                                {field.title}
+                                            </div>
+                                        ))}
                                 </Panel>
                             ))
                         }
@@ -101,7 +133,7 @@ const AnamnesisForm: FC<Props> = (props) => {
                 }
             </div>
         </PageContent>
-        <AnamnesisFieldForm visible={isVisibleAnamnesisFieldModal} topicId={topicId} onSubmit={onAddFieldForm} onClose={() => setIsVisibleAnamnesisFieldModal(false)} />
+        <AnamnesisFieldForm visible={isVisibleAnamnesisFieldModal} topicId={topicId} onSubmit={handleAddFieldForm} onClose={() => setIsVisibleAnamnesisFieldModal(false)} />
     </>
 }
 
