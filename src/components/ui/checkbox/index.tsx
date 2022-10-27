@@ -1,10 +1,10 @@
 import React, { FC, CSSProperties } from 'react';
-
+import { Checkbox as CheckboxAnt, CheckboxOptionType, Divider, Space } from 'antd';
 import styles from './index.module.scss';
 import { Field as FieldReact } from 'react-final-form';
-import { Radio as RadioAnt, Space } from 'antd';
+const CheckboxGroup = CheckboxAnt.Group;
 
-export interface IRadio {
+export interface ICheckbox {
   label?: string;
   name: string;
   placeholder?: string;
@@ -20,12 +20,11 @@ export interface IRadio {
   isRequired?: boolean;
   hidden?: boolean,
   disabled?: boolean,
-  items?: IItemRadio[],
-  bordered?: boolean,
-  direction?: 'horizontal' | 'vertical'
+  items?: IItemCheckbox[],
+  bordered?: boolean
 }
 
-export interface IItemRadio {
+export interface IItemCheckbox {
   value: string | number;
   label?: string;
   removed?: boolean;
@@ -38,10 +37,12 @@ const hasError = (meta: any, disabled?: boolean) => (
   !disabled && meta.invalid && meta.touched
 );
 
-const Radio: FC<IRadio> = ({
+const Checkbox: FC<ICheckbox> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', onFocus, onBlur, value,
-  onChange, isRequired, hidden, disabled, items, bordered, direction = 'vertical' }) => {
+  onChange, isRequired, hidden, disabled, items, bordered }) => {
+
+  var options = items?.map((item) => ({ label: item.label ?? item.value, value: item.value, style: item.style } as CheckboxOptionType));
 
   return (
     <FieldReact name={name} type={type} defaultValue={defaultValue} initialValue={value}>
@@ -52,21 +53,14 @@ const Radio: FC<IRadio> = ({
             <label
               hidden={type === 'hidden'}
               className={styles['labelInput']}>
-              <RadioAnt.Group
+              <CheckboxGroup
                 {...props.input}
                 disabled={disabled}
                 style={styleInput}
                 className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''} ${bordered ? styles['bordered'] : ''}`}
                 onChange={onChange}
-              >
-                <Space direction={direction}>
-                  {
-                    items?.map(item => (
-                      <RadioAnt value={item.value} style={item.style} className={item.className}>{item.label ?? item.value}</RadioAnt>
-                    ))
-                  }
-                </Space>
-              </RadioAnt.Group>
+                options={options}
+              />
               {props.meta.active ? onFocus && onFocus() : onBlur && onBlur()}
             </label>
             <div className={styles['errorInput']}>
@@ -78,4 +72,4 @@ const Radio: FC<IRadio> = ({
   );
 };
 
-export default Radio;
+export default Checkbox;

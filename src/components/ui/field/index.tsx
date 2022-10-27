@@ -17,13 +17,14 @@ export interface IField {
   disabled?: boolean;
   readonly?: boolean;
   onInput?: (value: string) => void;
-  onChange?: () => void;
+  onChange?: (value: string) => void;
   value?: string;
   defaultValue?: string;
   autoComplete?: 'true' | 'false';
   isRequired?: boolean;
   hidden?: boolean;
   maxLength?: number;
+  ref?: any;
 }
 
 const hasError = (meta: any, disabled?: boolean) => (
@@ -34,7 +35,7 @@ const Field: FC<IField> = ({
   label, style, styleInput, className, name, defaultValue,
   type = 'text', placeholder = label, autoComplete,
   onFocus, onBlur, onInput, disabled, value, readonly,
-  onChange, isRequired, hidden, maxLength
+  onChange, isRequired, hidden, maxLength, ref
 }) => {
 
   return (
@@ -53,9 +54,10 @@ const Field: FC<IField> = ({
                 readOnly={readonly}
                 style={styleInput}
                 maxLength={maxLength}
+                ref={ref}
                 className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''}`}
                 onInput={(e: any) => onInput && onInput(e.target.value)}
-                onChangeCapture={onChange}
+                onChangeCapture={(e: any) => onChange && onChange(e.target.value)}
                 autoComplete={autoComplete ? autoComplete : 'true'}
               />
               {props.meta.active ? onFocus && onFocus() : onBlur && onBlur()}

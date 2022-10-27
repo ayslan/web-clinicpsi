@@ -56,11 +56,11 @@ const AnamnesisFieldForm: FC<Props> = (props) => {
         ];
 
     const itemsTypeField = [
-        { value: 1, text: 'Campo de Texto' },
-        { value: 2, text: 'Campo de Texto Grande' },
-        { value: 3, text: 'Campo de Seleção Sim/Não' },
-        { value: 4, text: 'Campo de Seleção Única' },
-        { value: 5, text: 'Campo de Seleção Múltipla' },
+        { value: 1, label: 'Campo de Texto' },
+        { value: 2, label: 'Campo de Texto Grande' },
+        { value: 3, label: 'Campo de Seleção Sim/Não' },
+        { value: 4, label: 'Campo de Seleção Única' },
+        { value: 5, label: 'Campo de Seleção Múltipla' },
     ] as IItemRadio[];
 
     return (
