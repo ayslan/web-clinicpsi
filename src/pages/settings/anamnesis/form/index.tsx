@@ -23,20 +23,17 @@ const { Panel } = Collapse;
 const AnamnesisForm: FC<Props> = (props) => {
     let dispatch = useDispatch();
     const [isSubmit, setIsSubmit] = useState(false);
-    const [anamnesis, setAnamnesis] = useState({ topics: [{ anamnesisTopicId: 1, name: 'topic1', order: 4, fields: [] as IAnamnesisField[] }, { anamnesisTopicId: 2, name: 'topic2', order: 2, fields: [] as IAnamnesisField[] }, { anamnesisTopicId: 3, name: 'topic3', order: 3, fields: [] as IAnamnesisField[] }] as IAnamnesisTopic[] } as IAnamnesis);
+    const [anamnesis, setAnamnesis] = useState({ topics: [] as IAnamnesisTopic[] } as IAnamnesis);
     const [newTopicAuxId, setNewTopicAuxId] = useState(-1);
     const [isVisibleAnamnesisFieldModal, setIsVisibleAnamnesisFieldModal] = useState(false);
     const [topicId, setTopicId] = useState(0);
     const [DVFormGrupoPerguntas, setDVFormGrupoPerguntas] = useState<any>();
 
-    const initialRef: any = null;
-    const inputEditTopicRef = React.useRef(initialRef);
-
     const handleAddTopic = () => {
         if (DVFormGrupoPerguntas?.name || DVFormGrupoPerguntas?.name.toString().length > 0) {
             let name = DVFormGrupoPerguntas.name;
             let anamnesisAux = { ...anamnesis };
-            let order = anamnesis.topics.sort((a, b) => a.order - b.order)[anamnesis.topics.length - 1].order + 1;
+            let order = anamnesis.topics?.length > 0 ? anamnesis.topics?.sort((a, b) => a.order - b.order)[anamnesis.topics.length - 1].order + 1 : 1;
             anamnesisAux.topics = [...anamnesisAux.topics, { name: name, order: order, anamnesisTopicId: newTopicAuxId, fields: [] as IAnamnesisField[] } as IAnamnesisTopic];
             setAnamnesis(anamnesisAux);
             setNewTopicAuxId(newTopicAuxId - 1);
@@ -70,13 +67,14 @@ const AnamnesisForm: FC<Props> = (props) => {
             content:
                 <div>
                     <Form>
-                        <input ref={inputEditTopicRef} name='name-grupo-perguntas' defaultValue={topic.name}></input>
+                        <Field name='input-edit-name-topic' defaultValue={topic.name}></Field>
                     </Form>
                 </div>,
             okText: 'Confirmar',
             cancelText: 'Cancelar',
             onOk: () => {
-                topic.name = inputEditTopicRef?.current?.value;
+                let refAux: any = document.getElementsByName('input-edit-name-topic')[0];
+                topic.name = refAux.value;
                 let anamnesisAux = { ...anamnesis };
                 anamnesisAux.topics.splice(topicIndex, 1, topic);
                 setAnamnesis(anamnesisAux);
@@ -121,7 +119,7 @@ const AnamnesisForm: FC<Props> = (props) => {
             <FaTrash color='#e95151' style={{ position: 'relative', top: 2 }} onClick={event => { showModalRemoveTopic(topicId, event); }} />
         </div>
 
-    const itemField = (field: IAnamnesisField) =>
+    const getItemField = (field: IAnamnesisField) =>
         <div className={styles['field']}>
             <div className={styles['form']}>
                 {getFormByField(field)}
@@ -174,7 +172,7 @@ const AnamnesisForm: FC<Props> = (props) => {
             <Form initialValues={DVFormGrupoPerguntas}>
                 <div className={styles['formActions']}>
                     <Input.Group compact>
-                        <Field maxLength={45} label="Grupos de Perguntas" placeholder="Nome do Grupo de Perguntas" onInput={(e: any) => setDVFormGrupoPerguntas({ name: e })} name="name" style={{ width: '500px' }} />
+                        <Field maxLength={45} name="name123" label="Grupos de Perguntas" placeholder="Nome do Grupo de Perguntas" onInput={(e: any) => setDVFormGrupoPerguntas({ name: e })} style={{ width: '500px' }} />
                         <Button type='primary' onClick={() => handleAddTopic()}>Adicionar Grupo de Perguntas</Button>
                     </Input.Group>
                 </div>
@@ -187,7 +185,7 @@ const AnamnesisForm: FC<Props> = (props) => {
                                     <Panel header={topic.name} key={index} extra={optionsTopic(topic.anamnesisTopicId)}>
                                         {
                                             topic.fields.sort((a, b) => a.order - b.order).map((field) => (
-                                                itemField(field)
+                                                getItemField(field)
                                             ))}
                                     </Panel>
                                 ))

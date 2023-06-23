@@ -39,7 +39,7 @@ const Field: FC<IField> = ({
 }) => {
 
   return (
-    <FieldReact name={name} type={type} defaultValue={defaultValue} initialValue={value}>
+    <FieldReact name={name} type={type} defaultValue={defaultValue} initialValue={value} ref={ref}>
       {
         (props) => (
           <div className={`${styles['contentInput']} ${className ?? ''}`} style={style} hidden={hidden}>
@@ -54,7 +54,6 @@ const Field: FC<IField> = ({
                 readOnly={readonly}
                 style={styleInput}
                 maxLength={maxLength}
-                ref={ref}
                 className={`${hasError(props.meta, disabled) && !props.meta.active ? styles['invalid'] : ''}`}
                 onInput={(e: any) => onInput && onInput(e.target.value)}
                 onChangeCapture={(e: any) => onChange && onChange(e.target.value)}
